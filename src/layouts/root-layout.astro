@@ -5,6 +5,7 @@ import SEO from "@/components/seo.astro";
 import SiteFooter from "@/components/site-footer.astro";
 import SiteHeader from "@/components/site-header.astro";
 import { siteConfig } from "@/lib/site-config";
+import "@/styles/global.css";
 import type { ComponentProps } from "astro/types";
 
 type Props = ComponentProps<typeof SEO>;
@@ -25,7 +26,7 @@ const { title, titleTemplate, description } = Astro.props;
       description={description}
     />
   </head>
-  <body>
+  <body class="min-h-screen bg-white font-sans text-neutral-900 antialiased">
     <SiteHeader />
     <Container>
       <slot />
@@ -33,17 +34,3 @@ const { title, titleTemplate, description } = Astro.props;
     <SiteFooter />
   </body>
 </html>
-
-<style is:global>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
-</style>

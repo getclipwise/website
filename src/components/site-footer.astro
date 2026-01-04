@@ -5,50 +5,20 @@ import { siteConfig } from "@/lib/site-config";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer>
+<footer class="border-t border-neutral-200 py-8 text-center">
   <Container>
-    <p>&copy; {currentYear} {siteConfig.name}. All rights reserved.</p>
-    <nav aria-label="Footer navigation">
-      <ul role="list">
+    <p class="text-neutral-500">
+      &copy; {currentYear}
+      {siteConfig.name}. All rights reserved.
+    </p>
+    <nav aria-label="Footer navigation" class="mt-4">
+      <ul role="list" class="m-0 flex list-none justify-center gap-6 p-0">
         <li>
-          <a href="/privacy">Privacy Policy</a>
+          <a href="/privacy" class="text-inherit no-underline hover:underline">
+            Privacy Policy
+          </a>
         </li>
       </ul>
     </nav>
   </Container>
 </footer>
-
-<style>
-  footer {
-    padding-block: 2rem;
-    border-top: 1px solid #e5e5e5;
-    text-align: center;
-
-    p {
-      margin: 0;
-      color: #666;
-    }
-
-    nav {
-      margin-top: 1rem;
-
-      ul {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-
-        li > a {
-          color: inherit;
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
-</style>

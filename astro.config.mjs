@@ -1,5 +1,6 @@
 // @ts-check
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 function getSiteUrl() {
@@ -13,4 +14,7 @@ function getSiteUrl() {
 export default defineConfig({
   site: getSiteUrl(),
   integrations: [sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
