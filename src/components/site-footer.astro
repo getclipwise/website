@@ -5,16 +5,19 @@ import { siteConfig } from "@/lib/site-config";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-neutral-200 py-8 text-center">
+<footer class="border-t py-8 text-center">
   <Container>
-    <p class="text-neutral-500">
+    <p class="text-muted-foreground">
       &copy; {currentYear}
       {siteConfig.name}. All rights reserved.
     </p>
     <nav aria-label="Footer navigation" class="mt-4">
       <ul role="list" class="m-0 flex list-none justify-center gap-6 p-0">
         <li>
-          <a href="/privacy" class="text-inherit no-underline hover:underline">
+          <a
+            href="/privacy"
+            class="text-inherit no-underline hover:text-primary"
+          >
             Privacy Policy
           </a>
         </li>

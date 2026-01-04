@@ -13,14 +13,14 @@ import { siteConfig } from "@/lib/site-config";
       <header class="space-y-2">
         <h1 class="text-4xl font-bold tracking-tight">Privacy Policy</h1>
         <p class="font-semibold">Clipwise AI</p>
-        <p class="text-neutral-500">
+        <p class="text-muted-foreground">
           <time datetime="2026-01-04">Last updated: January 4, 2026</time>
         </p>
       </header>
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Overview</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           Clipwise AI is a browser extension that converts webpages to Markdown
           format. Your privacy is important to us, and this policy explains how
           the extension handles your data.
@@ -32,7 +32,7 @@ import { siteConfig } from "@/lib/site-config";
         <p class="font-semibold">
           Clipwise AI does not collect, store, or transmit any personal data.
         </p>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           All webpage content processing happens entirely within your browser.
           No data is sent to external servers, and we have no ability to access,
           view, or store any content you convert.
@@ -41,10 +41,10 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">How the Extension Works</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           When you click the Clipwise AI extension icon:
         </p>
-        <ol class="list-decimal space-y-2 pl-6 text-neutral-600">
+        <ol class="list-decimal space-y-2 pl-6 text-muted-foreground">
           <li>The extension reads the HTML content of the current webpage</li>
           <li>
             Content is processed locally using Mozilla Readability to extract
@@ -64,13 +64,13 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Permissions Explained</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           Clipwise AI requests the following permissions:
         </p>
         <dl class="space-y-4">
           <div>
             <dt class="font-semibold">activeTab</dt>
-            <dd class="text-neutral-600">
+            <dd class="text-muted-foreground">
               Allows the extension to read the current page's content only when
               you click the extension icon. The extension cannot access any page
               without your explicit action.
@@ -79,7 +79,7 @@ import { siteConfig } from "@/lib/site-config";
 
           <div>
             <dt class="font-semibold">storage</dt>
-            <dd class="text-neutral-600">
+            <dd class="text-muted-foreground">
               Used to temporarily store the converted Markdown in your browser's
               session storage. This data stays on your device and is cleared
               when you close your browser.
@@ -88,7 +88,7 @@ import { siteConfig } from "@/lib/site-config";
 
           <div>
             <dt class="font-semibold">sidePanel</dt>
-            <dd class="text-neutral-600">
+            <dd class="text-muted-foreground">
               Enables the extension to display the converted Markdown in
               Chrome's built-in side panel interface.
             </dd>
@@ -96,7 +96,7 @@ import { siteConfig } from "@/lib/site-config";
 
           <div>
             <dt class="font-semibold">scripting</dt>
-            <dd class="text-neutral-600">
+            <dd class="text-muted-foreground">
               Required to inject a small script that reads the page's HTML
               content when you click the extension icon.
             </dd>
@@ -106,7 +106,7 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Sharing</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           We do not share any data with third parties because we do not collect
           any data. The extension operates entirely offline and locally.
         </p>
@@ -114,7 +114,7 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Third-Party Services</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           Clipwise AI does not integrate with any third-party services,
           analytics platforms, or tracking systems.
         </p>
@@ -122,7 +122,7 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Security</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           Since all processing occurs locally within your browser and no data is
           transmitted externally, your content remains secure on your device.
         </p>
@@ -130,7 +130,7 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Children's Privacy</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           Clipwise AI does not collect any data from any users, including
           children.
         </p>
@@ -138,7 +138,7 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Changes to This Policy</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           We may update this privacy policy from time to time. Any changes will
           be reflected in the "Last updated" date at the top of this page.
         </p>
@@ -146,18 +146,18 @@ import { siteConfig } from "@/lib/site-config";
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Contact</h2>
-        <p class="text-neutral-600">
+        <p class="text-muted-foreground">
           If you have questions about this privacy policy, please contact us at
           <a
             href="mailto:dennismorello@gmail.com"
-            class="text-blue-600 underline hover:text-blue-800"
+            class="text-primary underline hover:text-primary/80"
             >dennismorello@gmail.com</a
           >.
         </p>
       </section>
 
-      <aside class="border-t border-neutral-200 pt-6">
-        <p class="text-sm italic text-neutral-500">
+      <aside class="border-t pt-6">
+        <p class="text-sm italic text-muted-foreground">
           This privacy policy applies to the Clipwise AI Chrome extension.
         </p>
       </aside>

@@ -12,12 +12,12 @@ const currentPath = normalizePath(Astro.url.pathname);
 
 <a
   href="#main-content"
-  class="absolute -top-10 left-0 z-50 bg-neutral-900 px-4 py-2 text-white no-underline focus:top-0"
+  class="absolute -top-10 left-0 z-50 bg-foreground px-4 py-2 text-background no-underline focus:top-0"
 >
   Skip to main content
 </a>
 
-<header class="border-b border-neutral-200 py-4">
+<header class="border-b py-4">
   <Container>
     <nav aria-label="Main navigation" class="flex items-center justify-between">
       <a href="/" class="font-semibold text-inherit no-underline">
@@ -28,7 +28,7 @@ const currentPath = normalizePath(Astro.url.pathname);
           <a
             href="/privacy"
             aria-current={currentPath === "/privacy" ? "page" : undefined}
-            class="text-inherit no-underline hover:underline"
+            class="text-inherit no-underline hover:text-primary"
           >
             Privacy
           </a>
