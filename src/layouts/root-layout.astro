@@ -1,23 +1,26 @@
 ---
 import faviconUrl from "@/assets/favicon.png?url";
+import SEO from "@/components/seo.astro";
+import { siteConfig } from "@/lib/site-config";
+import type { ComponentProps } from "astro/types";
 
-interface Props {
-  title: string;
-  description: string;
-}
+type Props = ComponentProps<typeof SEO>;
 
-const { title, description } = Astro.props;
+const { title, titleTemplate, description } = Astro.props;
 ---
 
-<html lang="en">
+<html lang={siteConfig.locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href={faviconUrl} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO
+      title={title}
+      titleTemplate={titleTemplate}
+      description={description}
+    />
   </head>
   <body>
     <slot />

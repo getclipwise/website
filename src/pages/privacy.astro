@@ -1,9 +1,11 @@
 ---
 import RootLayout from "@/layouts/root-layout.astro";
+import { siteConfig } from "@/lib/site-config";
 ---
 
 <RootLayout
-  title="Privacy Policy - Clipwise AI"
+  title="Privacy Policy"
+  titleTemplate={siteConfig.titleTemplate}
   description="Privacy Policy for Clipwise AI Chrome Extension"
 >
   <main>

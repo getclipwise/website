@@ -1,0 +1,56 @@
+---
+import { siteConfig } from "@/lib/site-config";
+import ogImageUrl from "@/assets/og-image.png?url";
+
+interface Props {
+  title?: string;
+  titleTemplate?: string;
+  description?: string;
+}
+
+const siteName = siteConfig.name;
+const defaultDescription = siteConfig.description;
+
+const {
+  title = siteName,
+  titleTemplate,
+  description = defaultDescription,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImageUrl, Astro.site).href;
+
+const pageTitle = titleTemplate ? titleTemplate.replace("%s", title) : title;
+const ogLocale = siteConfig.locale.replace("-", "_");
+---
+
+<!-- Primary Meta Tags -->
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={description} />
+<meta name="author" content={siteConfig.author.name} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={ogLocale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={siteConfig.author.twitter} />
+<meta name="twitter:creator" content={siteConfig.author.twitter} />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+<meta name="twitter:image:alt" content={title} />
