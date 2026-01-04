@@ -1,0 +1,153 @@
+---
+import RootLayout from "@/layouts/root-layout.astro";
+---
+
+<RootLayout
+  title="Privacy Policy - Clipwise AI"
+  description="Privacy Policy for Clipwise AI Chrome Extension"
+>
+  <main>
+    <article>
+      <header>
+        <h1>Privacy Policy</h1>
+        <p><strong>Clipwise AI</strong></p>
+        <p>
+          <time datetime="2026-01-04">Last updated: January 4, 2026</time>
+        </p>
+      </header>
+
+      <section>
+        <h2>Overview</h2>
+        <p>
+          Clipwise AI is a browser extension that converts webpages to Markdown
+          format. Your privacy is important to us, and this policy explains how
+          the extension handles your data.
+        </p>
+      </section>
+
+      <section>
+        <h2>Data Collection</h2>
+        <p>
+          <strong
+            >Clipwise AI does not collect, store, or transmit any personal data.</strong
+          >
+        </p>
+        <p>
+          All webpage content processing happens entirely within your browser.
+          No data is sent to external servers, and we have no ability to access,
+          view, or store any content you convert.
+        </p>
+      </section>
+
+      <section>
+        <h2>How the Extension Works</h2>
+        <p>When you click the Clipwise AI extension icon:</p>
+        <ol>
+          <li>The extension reads the HTML content of the current webpage</li>
+          <li>
+            Content is processed locally using Mozilla Readability to extract
+            the main article
+          </li>
+          <li>
+            The extracted content is converted to Markdown format using Turndown
+          </li>
+          <li>
+            The result is stored temporarily in your browser's session storage
+          </li>
+          <li>
+            Session storage is automatically cleared when you close your browser
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Permissions Explained</h2>
+        <p>Clipwise AI requests the following permissions:</p>
+        <dl>
+          <dt><strong>activeTab</strong></dt>
+          <dd>
+            Allows the extension to read the current page's content only when
+            you click the extension icon. The extension cannot access any page
+            without your explicit action.
+          </dd>
+
+          <dt><strong>storage</strong></dt>
+          <dd>
+            Used to temporarily store the converted Markdown in your browser's
+            session storage. This data stays on your device and is cleared when
+            you close your browser.
+          </dd>
+
+          <dt><strong>sidePanel</strong></dt>
+          <dd>
+            Enables the extension to display the converted Markdown in Chrome's
+            built-in side panel interface.
+          </dd>
+
+          <dt><strong>scripting</strong></dt>
+          <dd>
+            Required to inject a small script that reads the page's HTML content
+            when you click the extension icon.
+          </dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Data Sharing</h2>
+        <p>
+          We do not share any data with third parties because we do not collect
+          any data. The extension operates entirely offline and locally.
+        </p>
+      </section>
+
+      <section>
+        <h2>Third-Party Services</h2>
+        <p>
+          Clipwise AI does not integrate with any third-party services,
+          analytics platforms, or tracking systems.
+        </p>
+      </section>
+
+      <section>
+        <h2>Data Security</h2>
+        <p>
+          Since all processing occurs locally within your browser and no data is
+          transmitted externally, your content remains secure on your device.
+        </p>
+      </section>
+
+      <section>
+        <h2>Children's Privacy</h2>
+        <p>
+          Clipwise AI does not collect any data from any users, including
+          children.
+        </p>
+      </section>
+
+      <section>
+        <h2>Changes to This Policy</h2>
+        <p>
+          We may update this privacy policy from time to time. Any changes will
+          be reflected in the "Last updated" date at the top of this page.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          If you have questions about this privacy policy, please contact us at
+          <a href="mailto:dennismorello@gmail.com">dennismorello@gmail.com</a>.
+        </p>
+      </section>
+
+      <footer>
+        <hr />
+        <p>
+          <em
+            >This privacy policy applies to the Clipwise AI Chrome extension.</em
+          >
+        </p>
+      </footer>
+    </article>
+  </main>
+</RootLayout>
