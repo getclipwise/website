@@ -1,6 +1,9 @@
 ---
 import faviconUrl from "@/assets/favicon.png?url";
+import Container from "@/components/container.astro";
 import SEO from "@/components/seo.astro";
+import SiteFooter from "@/components/site-footer.astro";
+import SiteHeader from "@/components/site-header.astro";
 import { siteConfig } from "@/lib/site-config";
 import type { ComponentProps } from "astro/types";
 
@@ -23,6 +26,24 @@ const { title, titleTemplate, description } = Astro.props;
     />
   </head>
   <body>
-    <slot />
+    <SiteHeader />
+    <Container>
+      <slot />
+    </Container>
+    <SiteFooter />
   </body>
 </html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
