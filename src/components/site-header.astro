@@ -1,6 +1,7 @@
 ---
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
+import iconSrc from "@/assets/icon.svg";
 
 /** Normalize pathname by removing trailing slash (except for root "/") */
 function normalizePath(path: string) {
@@ -12,23 +13,45 @@ const currentPath = normalizePath(Astro.url.pathname);
 
 <a
   href="#main-content"
-  class="absolute -top-10 left-0 z-50 bg-foreground px-4 py-2 text-background no-underline focus:top-0"
+  class="absolute -top-10 left-0 z-50 bg-white px-4 py-2 text-emerald-950 no-underline focus:top-0"
 >
   Skip to main content
 </a>
 
-<header class="border-b py-4">
+<header
+  class="relative bg-linear-to-r from-emerald-950 via-emerald-900 to-emerald-950 py-4 shadow-lg shadow-emerald-950/20"
+>
+  <!-- Subtle gradient overlay for depth -->
+  <div
+    class="pointer-events-none absolute inset-0 bg-linear-to-b from-white/5 to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+
   <Container>
-    <nav aria-label="Main navigation" class="flex items-center justify-between">
-      <a href="/" class="font-semibold text-inherit no-underline">
-        {siteConfig.name}
+    <nav
+      aria-label="Main navigation"
+      class="relative flex items-center justify-between"
+    >
+      <a
+        href="/"
+        class="flex items-center gap-2.5 font-semibold text-white no-underline transition-opacity hover:opacity-90"
+      >
+        <img
+          src={iconSrc.src}
+          alt=""
+          width="36"
+          height="36"
+          class="size-9 drop-shadow-md"
+        />
+        <span class="text-lg tracking-tight">{siteConfig.name}</span>
       </a>
-      <ul role="list" class="m-0 flex list-none gap-6 p-0">
+      <ul class="m-0 flex list-none items-center gap-6 p-0">
         <li>
           <a
             href="/privacy"
             aria-current={currentPath === "/privacy" ? "page" : undefined}
-            class="text-inherit no-underline hover:text-primary"
+            class="text-sm font-medium text-emerald-100/90 no-underline transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
           >
             Privacy
           </a>

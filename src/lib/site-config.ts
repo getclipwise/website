@@ -6,6 +6,8 @@ export const siteConfig = {
   locale: "en-US",
   author: {
     name: "Dennis Morello",
+    website: "https://morello.dev",
     twitter: "@morellodev",
+    github: "morellodev",
   },
 } as const;
