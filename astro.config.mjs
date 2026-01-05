@@ -1,6 +1,7 @@
 // @ts-check
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
 function getSiteUrl() {
@@ -13,7 +14,7 @@ function getSiteUrl() {
 // https://astro.build/config
 export default defineConfig({
   site: getSiteUrl(),
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],
   },

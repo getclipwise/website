@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Clipwise AI",
-  titleTemplate: "%s - Clipwise AI",
+  titleTemplate: "%s | Clipwise AI",
   description:
-    "Clipwise AI is a browser extension that converts webpages to Markdown format.",
+    "Convert any webpage to clean Markdown for ChatGPT, Claude & other AI assistants. Fast, private, works offline.",
   locale: "en-US",
   author: {
     name: "Dennis Morello",

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
   --background: oklch(1 0 0);
@@ -7,8 +8,9 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.55 0.19 147);
-  --primary-foreground: oklch(0.98 0.02 147);
+  /* Tailwind emerald-600: #059669 */
+  --primary: oklch(0.596 0.145 163.22);
+  --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.97 0 0);
@@ -18,7 +20,7 @@
   --destructive: oklch(0.58 0.22 27);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.55 0.19 147);
+  --ring: oklch(0.596 0.145 163.22);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,8 +31,9 @@
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.72 0.22 148);
-    --primary-foreground: oklch(0.2 0.06 147);
+    /* Tailwind emerald-500: #10b981 */
+    --primary: oklch(0.696 0.17 162.48);
+    --primary-foreground: oklch(0.15 0.03 163);
     --secondary: oklch(0.274 0.006 286.033);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
@@ -40,7 +43,7 @@
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.72 0.22 148);
+    --ring: oklch(0.696 0.17 162.48);
   }
 }
 
