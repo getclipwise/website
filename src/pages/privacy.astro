@@ -29,13 +29,13 @@ import RootLayout from "@/layouts/root-layout.astro";
         <h2 class="text-2xl font-semibold">Data Collection</h2>
         <p class="font-semibold">
           Clipwise AI does not collect, store, or transmit any personal data or
-          webpage content.
+          webpage content to our servers.
         </p>
         <p class="text-muted-foreground">
           All webpage content processing happens entirely within your browser.
           We have no ability to access, view, or store any content you convert.
-          The only external communication is for premium license validation (see
-          below).
+          External communication only occurs for premium license validation and
+          when you explicitly use the "Open in ChatGPT/Claude" feature.
         </p>
       </section>
 
@@ -99,10 +99,85 @@ import RootLayout from "@/layouts/root-layout.astro";
             <dt class="font-semibold">scripting</dt>
             <dd class="text-muted-foreground">
               Required to inject a small script that reads the page's HTML
-              content when you click the extension icon.
+              content when you click the extension icon. Also used for the "Open
+              in ChatGPT/Claude" feature to automatically fill the prompt input.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">tabs</dt>
+            <dd class="text-muted-foreground">
+              Used only for the "Open in ChatGPT/Claude" feature to create a new
+              tab and detect when the AI service page has finished loading.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">
+              Host permissions (chatgpt.com, claude.ai)
+            </dt>
+            <dd class="text-muted-foreground">
+              Required only for the "Open in ChatGPT/Claude" feature. Allows the
+              extension to automatically paste your converted Markdown into the
+              AI prompt input. These permissions are never used unless you
+              explicitly click the corresponding button.
             </dd>
           </div>
         </dl>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Open in ChatGPT/Claude Feature</h2>
+        <p class="text-muted-foreground">
+          Clipwise AI includes an optional feature to send your converted
+          Markdown directly to ChatGPT or Claude. This feature is entirely
+          user-initiated—the extension will never send your content to these
+          services automatically.
+        </p>
+        <p class="font-semibold">When you use this feature:</p>
+        <ol class="list-decimal space-y-2 pl-6 text-muted-foreground">
+          <li>
+            The extension opens a new browser tab with the selected AI service
+            (chatgpt.com or claude.ai)
+          </li>
+          <li>
+            Once the page loads, the extension automatically pastes your
+            converted Markdown into the prompt input
+          </li>
+          <li>
+            Your content is then subject to the AI service's privacy policy
+          </li>
+        </ol>
+        <p class="font-semibold">Important:</p>
+        <ul class="list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>
+            This is an optional feature—you can always use the "Copy" button
+            instead
+          </li>
+          <li>
+            The content goes directly to the AI service; Clipwise AI does not
+            intercept, store, or process it
+          </li>
+          <li>
+            Review the privacy policies of
+            <a
+              href="https://openai.com/policies/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80"
+              >OpenAI (ChatGPT)</a
+            >
+            and
+            <a
+              href="https://www.anthropic.com/legal/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80"
+              >Anthropic (Claude)</a
+            >
+            to understand how they handle your data
+          </li>
+        </ul>
       </section>
 
       <section class="space-y-4">
@@ -147,7 +222,7 @@ import RootLayout from "@/layouts/root-layout.astro";
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Third-Party Services</h2>
         <p class="text-muted-foreground">
-          Clipwise AI integrates with one third-party service:
+          Clipwise AI may interact with the following third-party services:
         </p>
         <dl class="space-y-4">
           <div>
@@ -163,6 +238,36 @@ import RootLayout from "@/layouts/root-layout.astro";
                 >Lemon Squeezy's Privacy Policy</a
               >
               for their data handling practices.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">OpenAI (ChatGPT)</dt>
+            <dd class="text-muted-foreground">
+              Only accessed if you use the "Open in ChatGPT" feature. Your
+              converted Markdown is sent directly to their service. See
+              <a
+                href="https://openai.com/policies/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary underline hover:text-primary/80"
+                >OpenAI's Privacy Policy</a
+              >.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">Anthropic (Claude)</dt>
+            <dd class="text-muted-foreground">
+              Only accessed if you use the "Open in Claude" feature. Your
+              converted Markdown is sent directly to their service. See
+              <a
+                href="https://www.anthropic.com/legal/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary underline hover:text-primary/80"
+                >Anthropic's Privacy Policy</a
+              >.
             </dd>
           </div>
         </dl>

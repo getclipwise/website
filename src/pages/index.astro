@@ -21,19 +21,19 @@ const features = [
     icon: "lucide:file-text",
     title: "Beautiful Markdown",
     description:
-      "Preserves headings, lists, links, images, tables, and code blocks. Your content stays perfectly formatted.",
+      "Preserves headings, lists, links, code blocks, and text formatting. Images are stripped for cleaner AI context.",
   },
   {
-    icon: "lucide:code",
+    icon: "lucide:palette",
     title: "Syntax Highlighting",
     description:
-      "Code snippets are preserved and displayed with proper syntax highlighting for easy reading and copying.",
+      "Markdown is beautifully rendered with color-coded syntax for headers, links, bold, and other formatting.",
   },
   {
-    icon: "lucide:copy",
-    title: "One-Click Copy",
+    icon: "lucide:send",
+    title: "Direct AI Integration",
     description:
-      "Copy the full Markdown, just the title, or just the URL with dedicated buttons. Quick and convenient.",
+      "Open directly in ChatGPT or Claude with one click, or copy the Markdown to use anywhere.",
   },
   {
     icon: "lucide:panel-right",
@@ -181,10 +181,10 @@ const features = [
             >
               3
             </div>
-            <h3 class="text-xl font-semibold">Copy & paste to AI</h3>
+            <h3 class="text-xl font-semibold">Send to AI</h3>
             <p class="mt-2 text-muted-foreground">
-              Copy the clean Markdown and paste it into ChatGPT, Claude, or any
-              AI assistant.
+              Open directly in ChatGPT or Claude, or copy to any AI assistant of
+              your choice.
             </p>
           </div>
         </div>
@@ -278,7 +278,7 @@ const features = [
               {
                 [
                   "Page content processed locally",
-                  "No content sent to servers",
+                  "No data sent to our servers",
                   "No analytics or tracking",
                   "Works completely offline",
                 ].map((item) => (
