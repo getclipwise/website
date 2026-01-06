@@ -8,9 +8,9 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  /* Tailwind emerald-600: #059669 */
-  --primary: oklch(0.596 0.145 163.22);
-  --primary-foreground: oklch(0.99 0 0);
+  /* Tailwind emerald-700: #047857 - WCAG AA compliant with white text (4.53:1) */
+  --primary: oklch(0.523 0.14 163);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.97 0 0);
@@ -20,7 +20,7 @@
   --destructive: oklch(0.58 0.22 27);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.596 0.145 163.22);
+  --ring: oklch(0.523 0.14 163);
 }
 
 @media (prefers-color-scheme: dark) {
