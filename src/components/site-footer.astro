@@ -1,8 +1,9 @@
 ---
-import { Icon } from "astro-icon/components";
+import iconSrc from "@/assets/icon.svg";
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
-import iconSrc from "@/assets/icon.svg";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 
 const currentYear = new Date().getFullYear();
 
@@ -40,11 +41,11 @@ const socialLinks = [
             href="/"
             class="flex items-center gap-2.5 font-semibold text-white no-underline transition-opacity hover:opacity-90"
           >
-            <img
-              src={iconSrc.src}
+            <Image
+              src={iconSrc}
               alt=""
-              width="32"
-              height="32"
+              width={32}
+              height={32}
               class="size-8 drop-shadow-md"
             />
             <span class="text-lg tracking-tight">{siteConfig.name}</span>
