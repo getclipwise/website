@@ -12,7 +12,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         <h1 class="text-4xl font-bold tracking-tight">Privacy Policy</h1>
         <p class="font-semibold">Clipwise AI</p>
         <p class="text-muted-foreground">
-          <time datetime="2026-01-04">Last updated: January 4, 2026</time>
+          <time datetime="2026-01-06">Last updated: January 6, 2026</time>
         </p>
       </header>
 
@@ -28,12 +28,14 @@ import RootLayout from "@/layouts/root-layout.astro";
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Collection</h2>
         <p class="font-semibold">
-          Clipwise AI does not collect, store, or transmit any personal data.
+          Clipwise AI does not collect, store, or transmit any personal data or
+          webpage content.
         </p>
         <p class="text-muted-foreground">
           All webpage content processing happens entirely within your browser.
-          No data is sent to external servers, and we have no ability to access,
-          view, or store any content you convert.
+          We have no ability to access, view, or store any content you convert.
+          The only external communication is for premium license validation (see
+          below).
         </p>
       </section>
 
@@ -52,10 +54,11 @@ import RootLayout from "@/layouts/root-layout.astro";
             The extracted content is converted to Markdown format using Turndown
           </li>
           <li>
-            The result is stored temporarily in your browser's session storage
+            The result is stored temporarily in your browser's local storage
           </li>
           <li>
-            Session storage is automatically cleared when you close your browser
+            Your daily conversion count is tracked locally to enforce free tier
+            limits (resets at midnight)
           </li>
         </ol>
       </section>
@@ -78,9 +81,9 @@ import RootLayout from "@/layouts/root-layout.astro";
           <div>
             <dt class="font-semibold">storage</dt>
             <dd class="text-muted-foreground">
-              Used to temporarily store the converted Markdown in your browser's
-              session storage. This data stays on your device and is cleared
-              when you close your browser.
+              Used to store the converted Markdown, your daily conversion count,
+              and premium license data (if applicable) in your browser's local
+              storage. All data stays on your device.
             </dd>
           </div>
 
@@ -103,18 +106,68 @@ import RootLayout from "@/layouts/root-layout.astro";
       </section>
 
       <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Premium License Validation</h2>
+        <p class="text-muted-foreground">
+          If you purchase a premium license, the extension communicates with
+          Lemon Squeezy (our payment and licensing provider) to validate your
+          license. This is the only external network communication the extension
+          makes.
+        </p>
+        <p class="font-semibold">What data is sent to Lemon Squeezy:</p>
+        <ul class="list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>Your license key (to verify it's valid and active)</li>
+          <li>
+            A unique browser instance identifier (to enforce device limits—up to
+            3 browsers per license)
+          </li>
+        </ul>
+        <p class="font-semibold">What is NOT sent:</p>
+        <ul class="list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>Any webpage content you convert</li>
+          <li>Your browsing history or URLs</li>
+          <li>Any other personal information</li>
+        </ul>
+        <p class="text-muted-foreground">
+          License validation occurs when you activate a license and periodically
+          (once per day) while using premium features. If you use only the free
+          tier, no external network requests are made.
+        </p>
+      </section>
+
+      <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Sharing</h2>
         <p class="text-muted-foreground">
-          We do not share any data with third parties because we do not collect
-          any data. The extension operates entirely offline and locally.
+          We do not share your webpage content or browsing data with any third
+          parties. For premium users, only license validation data (license key
+          and browser instance ID) is shared with Lemon Squeezy to verify your
+          subscription.
         </p>
       </section>
 
       <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Third-Party Services</h2>
         <p class="text-muted-foreground">
-          Clipwise AI does not integrate with any third-party services,
-          analytics platforms, or tracking systems.
+          Clipwise AI integrates with one third-party service:
+        </p>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold">Lemon Squeezy</dt>
+            <dd class="text-muted-foreground">
+              Our payment and licensing provider. Used only for premium license
+              validation. See
+              <a
+                href="https://www.lemonsqueezy.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary underline hover:text-primary/80"
+                >Lemon Squeezy's Privacy Policy</a
+              >
+              for their data handling practices.
+            </dd>
+          </div>
+        </dl>
+        <p class="text-muted-foreground">
+          We do not use any analytics platforms or tracking systems.
         </p>
       </section>
 

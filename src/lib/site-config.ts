@@ -10,4 +10,16 @@ export const siteConfig = {
     twitter: "@morellodev",
     github: "morellodev",
   },
+  links: {
+    chromeWebStore:
+      "https://chromewebstore.google.com/detail/amodhodhpfaejkbmmbpmidpnlpadhjph",
+    premiumCheckout:
+      "https://shop.getclipwise.app/checkout/buy/8c84d46a-87a7-4e62-8ca6-c4d54160d714",
+  },
+  pricing: {
+    premium: {
+      price: 19.99,
+      currency: "USD",
+    },
+  },
 } as const;
