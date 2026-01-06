@@ -26,16 +26,88 @@ import RootLayout from "@/layouts/root-layout.astro";
       </section>
 
       <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Data Controller</h2>
+        <p class="text-muted-foreground">
+          The data controller for Clipwise AI is Dennis Morello, an independent
+          software developer based in Italy. For any privacy-related inquiries,
+          you can contact the data controller at
+          <a
+            href="mailto:dennismorello@gmail.com"
+            class="text-primary underline hover:text-primary/80"
+            >dennismorello@gmail.com</a
+          >.
+        </p>
+      </section>
+
+      <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Collection</h2>
         <p class="font-semibold">
           Clipwise AI does not collect, store, or transmit any personal data or
           webpage content to our servers.
         </p>
         <p class="text-muted-foreground">
-          All webpage content processing happens entirely within your browser.
-          We have no ability to access, view, or store any content you convert.
-          External communication only occurs for premium license validation and
-          when you explicitly use the "Open in ChatGPT/Claude" feature.
+          The extension only accesses webpage content after an explicit user
+          action (clicking the extension icon). All webpage content processing
+          happens entirely within your browser. We have no ability to access,
+          view, or store any content you convert. External communication only
+          occurs for premium license validation and when you explicitly use the
+          "Open in ChatGPT/Claude" feature.
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Legal Basis for Processing</h2>
+        <p class="text-muted-foreground">
+          Under the
+          <a
+            href="https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary underline hover:text-primary/80"
+            >General Data Protection Regulation (GDPR)</a
+          >
+          and other applicable privacy laws, we process limited data based on the
+          following legal grounds:
+        </p>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold">
+              Contractual necessity (<a
+                href="https://gdpr-info.eu/art-6-gdpr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary underline hover:text-primary/80"
+                >Art. 6(1)(b) GDPR</a
+              >)
+            </dt>
+            <dd class="text-muted-foreground">
+              For premium license holders, we process license keys and browser
+              instance identifiers to fulfill our contractual obligation to
+              provide you with the premium features you purchased.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">
+              Legitimate interest (<a
+                href="https://gdpr-info.eu/art-6-gdpr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary underline hover:text-primary/80"
+                >Art. 6(1)(f) GDPR</a
+              >)
+            </dt>
+            <dd class="text-muted-foreground">
+              We have a legitimate interest in preventing fraud and enforcing
+              license activation limits (up to 3 browsers per license) to
+              protect our business and ensure fair use of the service.
+            </dd>
+          </div>
+        </dl>
+        <p class="text-muted-foreground">
+          For free tier users, no personal data is processed externally—all
+          operations occur locally in your browser without any legal basis
+          requirement.
         </p>
       </section>
 
@@ -226,18 +298,31 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
         <dl class="space-y-4">
           <div>
-            <dt class="font-semibold">Lemon Squeezy</dt>
-            <dd class="text-muted-foreground">
-              Our payment and licensing provider. Used only for premium license
-              validation. See
-              <a
-                href="https://www.lemonsqueezy.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-primary underline hover:text-primary/80"
-                >Lemon Squeezy's Privacy Policy</a
-              >
-              for their data handling practices.
+            <dt class="font-semibold">Lemon Squeezy (Payment & Licensing)</dt>
+            <dd class="space-y-2 text-muted-foreground">
+              <p>
+                Lemon Squeezy acts as an independent data controller for payment
+                processing, invoicing, VAT handling, and transactional emails.
+                When you purchase a premium license, Lemon Squeezy collects and
+                processes your payment information, billing address, and email
+                address according to their own privacy policy.
+              </p>
+              <p>
+                For license validation, Lemon Squeezy acts as a data processor
+                on our behalf, processing only your license key and browser
+                instance identifier to verify your subscription status.
+              </p>
+              <p>
+                See
+                <a
+                  href="https://www.lemonsqueezy.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary underline hover:text-primary/80"
+                  >Lemon Squeezy's Privacy Policy</a
+                >
+                for their complete data handling practices.
+              </p>
             </dd>
           </div>
 
@@ -285,10 +370,170 @@ import RootLayout from "@/layouts/root-layout.astro";
       </section>
 
       <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Data Retention</h2>
+        <p class="text-muted-foreground">
+          We retain data according to the following criteria:
+        </p>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold">Local browser storage</dt>
+            <dd class="text-muted-foreground">
+              Converted Markdown content and daily conversion counts are stored
+              temporarily in your browser's local storage. This data is cleared
+              when you clear your browser data or uninstall the extension.
+              Conversion counts reset automatically at midnight each day.
+            </dd>
+          </div>
+
+          <div>
+            <dt class="font-semibold">Premium license data</dt>
+            <dd class="text-muted-foreground">
+              License keys and browser instance identifiers are stored locally
+              for as long as your license remains active. When you deactivate
+              your license or it expires, this data is removed from your
+              browser. Lemon Squeezy retains purchase records according to their
+              own retention policy and applicable tax regulations.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">Your Rights</h2>
+        <p class="text-muted-foreground">
+          Under
+          <a
+            href="https://gdpr-info.eu/chapter-3/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary underline hover:text-primary/80"
+            >Chapter 3 of the GDPR</a
+          >
+          and other applicable privacy laws, you have the following rights regarding
+          your personal data:
+        </p>
+        <ul class="list-disc space-y-2 pl-6 text-muted-foreground">
+          <li>
+            <strong>Right of access</strong> (<a
+              href="https://gdpr-info.eu/art-15-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 15</a
+            >): You can request information about what personal data we hold
+            about you.
+          </li>
+          <li>
+            <strong>Right to rectification</strong> (<a
+              href="https://gdpr-info.eu/art-16-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 16</a
+            >): You can request correction of inaccurate personal data.
+          </li>
+          <li>
+            <strong>Right to erasure</strong> (<a
+              href="https://gdpr-info.eu/art-17-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 17</a
+            >): You can request deletion of your personal data. For local data,
+            you can clear it yourself through your browser settings. For
+            license-related data held by Lemon Squeezy, contact them directly or
+            reach out to us for assistance.
+          </li>
+          <li>
+            <strong>Right to restriction</strong> (<a
+              href="https://gdpr-info.eu/art-18-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 18</a
+            >): You can request that we limit how we use your data.
+          </li>
+          <li>
+            <strong>Right to data portability</strong> (<a
+              href="https://gdpr-info.eu/art-20-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 20</a
+            >): You can request a copy of your data in a machine-readable
+            format.
+          </li>
+          <li>
+            <strong>Right to object</strong> (<a
+              href="https://gdpr-info.eu/art-21-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 21</a
+            >): You can object to processing based on legitimate interests.
+          </li>
+          <li>
+            <strong>Right to lodge a complaint</strong> (<a
+              href="https://gdpr-info.eu/art-77-gdpr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80">Art. 77</a
+            >): You have the right to lodge a complaint with a data protection
+            supervisory authority. For users in Italy, this is the
+            <a
+              href="https://www.garanteprivacy.it"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80"
+              lang="it"><em>Garante per la protezione dei dati personali</em></a
+            >
+            (Italian Data Protection Authority). Users in other EU/EEA countries can
+            find their local supervisory authority on the
+            <a
+              href="https://edpb.europa.eu/about-edpb/about-edpb/members_en"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary underline hover:text-primary/80"
+              >European Data Protection Board (EDPB) website</a
+            >.
+          </li>
+        </ul>
+        <p class="text-muted-foreground">
+          To exercise any of these rights, please contact us at
+          <a
+            href="mailto:dennismorello@gmail.com"
+            class="text-primary underline hover:text-primary/80"
+            >dennismorello@gmail.com</a
+          >. We will respond to your request within 30 days.
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold">International Data Transfers</h2>
+        <p class="text-muted-foreground">
+          Clipwise AI is available worldwide. While all webpage content
+          processing occurs locally in your browser, premium license validation
+          may involve data transfers to Lemon Squeezy's servers, which may be
+          located outside your country of residence.
+        </p>
+        <p class="text-muted-foreground">
+          For users in the European Economic Area (EEA), United Kingdom, or
+          Switzerland, any transfer of personal data outside these regions is
+          conducted in compliance with applicable data protection laws, relying
+          on appropriate safeguards such as Standard Contractual Clauses or
+          adequacy decisions where applicable. Lemon Squeezy's data protection
+          practices can be reviewed in their
+          <a
+            href="https://www.lemonsqueezy.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary underline hover:text-primary/80"
+            >Privacy Policy</a
+          >.
+        </p>
+      </section>
+
+      <section class="space-y-4">
         <h2 class="text-2xl font-semibold">Children's Privacy</h2>
         <p class="text-muted-foreground">
-          Clipwise AI does not collect any data from any users, including
-          children.
+          Clipwise AI does not knowingly collect any personal data from children
+          under the age of 16. If you believe a child has provided us with
+          personal data, please contact us and we will take steps to delete such
+          information.
         </p>
       </section>
 
