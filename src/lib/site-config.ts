@@ -18,7 +18,7 @@ export const siteConfig = {
   },
   pricing: {
     premium: {
-      price: 19.99,
+      price: 9.99,
       currency: "USD",
     },
   },
