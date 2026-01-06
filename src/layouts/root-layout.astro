@@ -1,5 +1,5 @@
 ---
-import faviconUrl from "@/assets/favicon.png?url";
+import faviconUrl from "@/assets/icon.svg?url";
 import SEO from "@/components/seo.astro";
 import SiteFooter from "@/components/site-footer.astro";
 import SiteHeader from "@/components/site-header.astro";
@@ -8,22 +8,16 @@ import "@/styles/global.css";
 import type { ComponentProps } from "astro/types";
 
 type Props = ComponentProps<typeof SEO>;
-
-const { title, titleTemplate, description } = Astro.props;
 ---
 
 <html lang={siteConfig.locale}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href={faviconUrl} />
+    <link rel="icon" type="image/svg+xml" href={faviconUrl} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <SEO
-      title={title}
-      titleTemplate={titleTemplate}
-      description={description}
-    />
+    <SEO {...Astro.props} />
   </head>
   <body>
     <SiteHeader />
