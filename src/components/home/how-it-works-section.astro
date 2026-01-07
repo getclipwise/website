@@ -1,0 +1,39 @@
+---
+import NumberedStep from "@/components/numbered-step.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  steps: Array<{
+    title: string;
+    description: string;
+  }>;
+}
+
+const { title, subtitle, steps } = Astro.props;
+---
+
+<section class="border-y bg-muted/30 py-20 md:py-28">
+  <div class="mx-auto max-w-5xl px-4">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight md:text-4xl">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg text-muted-foreground">
+        {subtitle}
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-3">
+      {
+        steps.map((step, index) => (
+          <NumberedStep
+            stepNumber={index + 1}
+            title={step.title}
+            description={step.description}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

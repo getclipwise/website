@@ -1,0 +1,85 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  tagline: string;
+  price: string;
+  priceSuffix: string;
+  features: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  ctaIcon: string;
+  isPrimary?: boolean;
+  badge?: string;
+}
+
+const {
+  name,
+  tagline,
+  price,
+  priceSuffix,
+  features,
+  ctaLabel,
+  ctaHref,
+  ctaIcon,
+  isPrimary = false,
+  badge,
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative flex flex-col overflow-hidden rounded-2xl bg-card p-6 md:p-8",
+    {
+      "border-2 border-primary": isPrimary,
+      border: !isPrimary,
+    },
+  ]}
+>
+  {
+    badge && (
+      <div class="absolute -right-8 top-4 flex h-6 w-28 rotate-45 items-center justify-center bg-primary text-xs font-semibold text-primary-foreground">
+        {badge}
+      </div>
+    )
+  }
+  <div class="mb-4">
+    <h3 class="text-lg font-semibold">{name}</h3>
+    <p class="mt-1 text-sm text-muted-foreground">
+      {tagline}
+    </p>
+  </div>
+  <div class="mb-6">
+    <span class="text-4xl font-bold">{price}</span>
+    <span class="text-muted-foreground">{priceSuffix}</span>
+  </div>
+  <ul class="space-y-3 text-sm">
+    {
+      features.map((item) => (
+        <li class="flex items-center gap-2">
+          <Icon name="lucide:check" class="size-4 text-primary" />
+          <span>{item}</span>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="mt-auto pt-8">
+    <a
+      href={ctaHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      class:list={[
+        "group inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-primary px-6 py-3.5 font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+        {
+          "bg-primary text-primary-foreground shadow-lg shadow-primary/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30":
+            isPrimary,
+          "bg-transparent text-primary hover:bg-primary/5": !isPrimary,
+        },
+      ]}
+    >
+      <Icon name={ctaIcon} class="size-5" />
+      {ctaLabel}
+    </a>
+  </div>
+</div>

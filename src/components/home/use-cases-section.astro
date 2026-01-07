@@ -1,0 +1,28 @@
+---
+import CheckItem from "@/components/check-item.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  useCases: string[];
+}
+
+const { title, subtitle, useCases } = Astro.props;
+---
+
+<section class="border-y bg-muted/30 py-20 md:py-28">
+  <div class="mx-auto max-w-5xl px-4">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight md:text-4xl">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg text-muted-foreground">
+        {subtitle}
+      </p>
+    </div>
+
+    <div class="mt-12 grid grid-rows-2 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {useCases.map((useCase) => <CheckItem>{useCase}</CheckItem>)}
+    </div>
+  </div>
+</section>

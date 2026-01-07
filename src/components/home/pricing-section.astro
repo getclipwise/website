@@ -1,0 +1,48 @@
+---
+import PricingCard from "@/components/pricing-card.astro";
+
+interface PricingTierData {
+  name: string;
+  tagline: string;
+  price: string;
+  priceSuffix: string;
+  features: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  ctaIcon: string;
+  isPrimary?: boolean;
+  badge?: string;
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  tiers: PricingTierData[];
+  disclaimer: string;
+}
+
+const { title, subtitle, tiers, disclaimer } = Astro.props;
+---
+
+<section class="border-y bg-muted/30 py-20 md:py-28">
+  <div class="mx-auto max-w-5xl px-4">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight md:text-4xl">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg text-muted-foreground">
+        {subtitle}
+      </p>
+    </div>
+
+    <div
+      class="mt-12 grid gap-6 md:grid-cols-2 md:gap-8 lg:mx-auto lg:max-w-3xl"
+    >
+      {tiers.map((tier) => <PricingCard {...tier} />)}
+    </div>
+
+    <p class="mt-8 text-center text-sm text-muted-foreground">
+      {disclaimer}
+    </p>
+  </div>
+</section>
