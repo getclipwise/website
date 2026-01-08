@@ -94,7 +94,7 @@ src/
 
 - `astro.config.mjs` dynamically sets site URL:
   - Production: Uses `VERCEL_PROJECT_PRODUCTION_URL` env var
-  - Fallback: `https://getclipwise.app`
+  - Fallback: `https://www.getclipwise.app`
 - Required for sitemap generation and canonical URLs
 
 ## Important Details

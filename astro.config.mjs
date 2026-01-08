@@ -8,7 +8,7 @@ function getSiteUrl() {
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
-  return "https://getclipwise.app";
+  return "https://www.getclipwise.app";
 }
 
 // https://astro.build/config
