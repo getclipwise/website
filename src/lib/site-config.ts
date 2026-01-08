@@ -14,7 +14,7 @@ export const siteConfig = {
     chromeWebStore:
       "https://chromewebstore.google.com/detail/amodhodhpfaejkbmmbpmidpnlpadhjph",
     premiumCheckout:
-      "https://shop.getclipwise.app/checkout/buy/8c84d46a-87a7-4e62-8ca6-c4d54160d714",
+      "https://shop.getclipwise.app/checkout/buy/30ad71d7-8b6f-476c-8925-5f8259d44cc8",
   },
   pricing: {
     premium: {
