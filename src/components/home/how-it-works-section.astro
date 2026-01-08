@@ -1,13 +1,11 @@
 ---
 import NumberedStep from "@/components/numbered-step.astro";
+import type { Step } from "@/types";
 
 interface Props {
   title: string;
   subtitle: string;
-  steps: Array<{
-    title: string;
-    description: string;
-  }>;
+  steps: Step[];
 }
 
 const { title, subtitle, steps } = Astro.props;

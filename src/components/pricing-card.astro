@@ -1,20 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { PricingTier } from "@/types";
 
-interface Props {
-  name: string;
-  tagline: string;
-  price: string;
-  priceSuffix: string;
-  features: string[];
-  ctaLabel: string;
-  ctaHref: string;
-  ctaIcon: string;
-  isPrimary?: boolean;
-  badge?: string;
-}
+type Props = PricingTier;
 
 const {
+  tier,
   name,
   tagline,
   price,
@@ -23,17 +14,18 @@ const {
   ctaLabel,
   ctaHref,
   ctaIcon,
-  isPrimary = false,
-  badge,
 } = Astro.props;
+
+const isPremium = tier === "premium";
+const badge = isPremium ? "Popular" : undefined;
 ---
 
 <div
   class:list={[
     "relative flex flex-col overflow-hidden rounded-2xl bg-card p-6 md:p-8",
     {
-      "border-2 border-primary": isPrimary,
-      border: !isPrimary,
+      "border-2 border-primary": isPremium,
+      border: !isPremium,
     },
   ]}
 >
@@ -73,8 +65,8 @@ const {
         "group inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-primary px-6 py-3.5 font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
         {
           "bg-primary text-primary-foreground shadow-lg shadow-primary/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30":
-            isPrimary,
-          "bg-transparent text-primary hover:bg-primary/5": !isPrimary,
+            isPremium,
+          "bg-transparent text-primary hover:bg-primary/5": !isPremium,
         },
       ]}
     >

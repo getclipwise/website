@@ -1,11 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { Feature } from "@/types";
 
-interface Props {
-  icon: string;
-  title: string;
-  description: string;
-}
+type Props = Feature;
 
 const { icon, title, description } = Astro.props;
 ---

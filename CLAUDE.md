@@ -18,6 +18,9 @@ pnpm dev              # Start dev server at localhost:4321
 pnpm build            # Build production site to ./dist/
 pnpm preview          # Preview production build locally
 
+# Type Checking
+pnpm astro check      # Run TypeScript type checker
+
 # Astro CLI
 pnpm astro ...        # Run Astro CLI commands
 ```
@@ -48,8 +51,10 @@ src/
 │   ├── index.astro      # Home page (composed of home/* sections)
 │   ├── privacy.astro    # Privacy policy page
 │   └── robots.txt.ts    # Dynamic robots.txt
-└── styles/
-    └── global.css       # Global styles with CSS variable design tokens
+├── styles/
+│   └── global.css       # Global styles with CSS variable design tokens
+└── types/
+    └── index.ts         # Shared TypeScript types (Feature, Step, PricingTier, etc.)
 ```
 
 ### Key Architectural Patterns
@@ -114,8 +119,10 @@ src/
 ### Type Safety
 
 - Extends `astro/tsconfigs/strict` for strictest TypeScript checks
-- Astro component props typed with TypeScript interfaces/types
-- Use `as const` for configuration objects to preserve literal types
+- Shared types live in `src/types/index.ts` (Feature, Step, PricingTier, TrustBadge, Headline)
+- Component props use `type Props = SomeType` for direct type aliases
+- Component props use `interface Props extends SomeType` when adding extra props
+- Use explicit type annotations for arrays with union types (e.g., `const items: SomeType[] = [...]`)
 
 ### Deployment
 

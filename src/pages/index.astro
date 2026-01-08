@@ -8,13 +8,14 @@ import PrivacySection from "@/components/home/privacy-section.astro";
 import UseCasesSection from "@/components/home/use-cases-section.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import { siteConfig } from "@/lib/site-config";
+import type { Feature, PricingTier, Step, TrustBadge } from "@/types";
 
 const formattedPrice = new Intl.NumberFormat(siteConfig.locale, {
   style: "currency",
   currency: siteConfig.pricing.premium.currency,
 }).format(siteConfig.pricing.premium.price);
 
-const features = [
+const features: Feature[] = [
   {
     icon: "lucide:lightbulb",
     title: "Smart Extraction",
@@ -53,7 +54,7 @@ const features = [
   },
 ];
 
-const steps = [
+const steps: Step[] = [
   {
     title: "Browse any webpage",
     description:
@@ -87,8 +88,9 @@ const privacyHighlights = [
   "Works completely offline",
 ];
 
-const pricingTiers = [
+const pricingTiers: PricingTier[] = [
   {
+    tier: "free",
     name: "Free",
     tagline: "Perfect for occasional use",
     price: "$0",
@@ -103,9 +105,9 @@ const pricingTiers = [
     ctaLabel: "Add to Chrome",
     ctaHref: siteConfig.links.chromeWebStore,
     ctaIcon: "simple-icons:googlechrome",
-    isPrimary: false,
   },
   {
+    tier: "premium",
     name: "Premium",
     tagline: "For power users and professionals",
     price: formattedPrice,
@@ -121,12 +123,10 @@ const pricingTiers = [
     ctaLabel: "Get Premium",
     ctaHref: siteConfig.links.premiumCheckout,
     ctaIcon: "lucide:sparkles",
-    isPrimary: true,
-    badge: "Popular",
   },
 ];
 
-const trustBadges = [
+const trustBadges: TrustBadge[] = [
   { icon: "lucide:gift", label: "10 Free Daily" },
   { icon: "lucide:shield-check", label: "100% Private" },
   { icon: "lucide:zap", label: "Instant Conversion" },

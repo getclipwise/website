@@ -1,23 +1,11 @@
 ---
 import PricingCard from "@/components/pricing-card.astro";
-
-interface PricingTierData {
-  name: string;
-  tagline: string;
-  price: string;
-  priceSuffix: string;
-  features: string[];
-  ctaLabel: string;
-  ctaHref: string;
-  ctaIcon: string;
-  isPrimary?: boolean;
-  badge?: string;
-}
+import type { PricingTier } from "@/types";
 
 interface Props {
   title: string;
   subtitle: string;
-  tiers: PricingTierData[];
+  tiers: PricingTier[];
   disclaimer: string;
 }
 

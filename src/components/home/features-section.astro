@@ -1,14 +1,11 @@
 ---
 import FeatureCard from "@/components/feature-card.astro";
+import type { Feature } from "@/types";
 
 interface Props {
   title: string;
   subtitle: string;
-  features: Array<{
-    icon: string;
-    title: string;
-    description: string;
-  }>;
+  features: Feature[];
 }
 
 const { title, subtitle, features } = Astro.props;

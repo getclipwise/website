@@ -1,20 +1,14 @@
 ---
 import AddToChromeButton from "@/components/add-to-chrome-button.astro";
 import StatusBadge from "@/components/status-badge.astro";
+import type { Headline, TrustBadge } from "@/types";
 import { Icon } from "astro-icon/components";
 
 interface Props {
   badge: string;
-  headline: {
-    prefix: string;
-    highlight: string;
-    suffix: string;
-  };
+  headline: Headline;
   subheadline: string;
-  trustBadges: Array<{
-    icon: string;
-    label: string;
-  }>;
+  trustBadges: TrustBadge[];
 }
 
 const { badge, headline, subheadline, trustBadges } = Astro.props;

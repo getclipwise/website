@@ -1,8 +1,8 @@
 ---
-interface Props {
+import type { Step } from "@/types";
+
+interface Props extends Step {
   stepNumber: number;
-  title: string;
-  description: string;
 }
 
 const { stepNumber, title, description } = Astro.props;
