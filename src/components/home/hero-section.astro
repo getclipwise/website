@@ -27,11 +27,11 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
     aria-hidden="true"
   >
     <div
-      class="absolute -top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-linear-to-br from-emerald-400/30 via-emerald-500/10 to-transparent blur-3xl dark:from-emerald-400/20 dark:via-emerald-500/10"
+      class="aurora-layer aurora-layer--1 absolute -top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-linear-to-br from-emerald-400/30 via-emerald-500/10 to-transparent blur-3xl dark:from-emerald-400/20 dark:via-emerald-500/10"
     >
     </div>
     <div
-      class="absolute -bottom-1/4 right-0 h-[600px] w-[600px] rounded-full bg-linear-to-tl from-emerald-500/20 via-transparent to-transparent blur-3xl dark:from-emerald-500/15"
+      class="aurora-layer aurora-layer--2 absolute -bottom-1/4 right-0 h-[600px] w-[600px] rounded-full bg-linear-to-tl from-emerald-500/20 via-transparent to-transparent blur-3xl dark:from-emerald-500/15"
     >
     </div>
   </div>
@@ -80,3 +80,48 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
     </div>
   </div>
 </section>
+
+<style>
+  .aurora-layer {
+    animation: aurora-drift-1 14s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .aurora-layer--1 {
+    animation-delay: -4s;
+  }
+
+  .aurora-layer--2 {
+    animation: aurora-drift-2 18s ease-in-out infinite alternate -6s;
+  }
+
+  @keyframes aurora-drift-1 {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-8%, 0, 0) scale(1.06);
+    }
+    100% {
+      transform: translate3d(6%, 0, 0) scale(1.03);
+    }
+  }
+
+  @keyframes aurora-drift-2 {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-12%, 0, 0) scale(1.08);
+    }
+    100% {
+      transform: translate3d(8%, 0, 0) scale(1.05);
+    }
+  }
+
+  @media (max-width: 640px), (prefers-reduced-motion: reduce) {
+    .aurora-layer {
+      animation: none;
+    }
+  }
+</style>
