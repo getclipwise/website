@@ -1,5 +1,5 @@
 ---
-import faviconUrl from "@/assets/icon.svg?url";
+import iconUrl from "@/assets/icon.svg?no-inline";
 import SEO from "@/components/seo.astro";
 import SiteFooter from "@/components/site-footer.astro";
 import SiteHeader from "@/components/site-header.astro";
@@ -13,7 +13,8 @@ type Props = ComponentProps<typeof SEO>;
 <html lang={siteConfig.locale}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={faviconUrl} />
+    <link rel="icon" href={iconUrl} type="image/svg+xml" sizes="any" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
