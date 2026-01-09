@@ -3,11 +3,17 @@ import iconUrl from "@/assets/icon.svg?no-inline";
 import SEO from "@/components/seo.astro";
 import SiteFooter from "@/components/site-footer.astro";
 import SiteHeader from "@/components/site-header.astro";
+import StructuredData from "@/components/structured-data.astro";
 import { siteConfig } from "@/lib/site-config";
 import "@/styles/global.css";
 import type { ComponentProps } from "astro/types";
 
-type Props = ComponentProps<typeof SEO>;
+interface Props {
+  seo: ComponentProps<typeof SEO>;
+  structuredData: ComponentProps<typeof StructuredData>;
+}
+
+const { seo, structuredData } = Astro.props;
 ---
 
 <html lang={siteConfig.locale}>
@@ -15,10 +21,33 @@ type Props = ComponentProps<typeof SEO>;
     <meta charset="utf-8" />
     <link rel="icon" href={iconUrl} type="image/svg+xml" sizes="any" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Theme color for mobile browsers -->
+    <meta
+      name="theme-color"
+      content="#022c22"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#022c22"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Preconnect to external resources for faster loading -->
+    <link rel="preconnect" href="https://chromewebstore.google.com" />
+    <link rel="dns-prefetch" href="https://chromewebstore.google.com" />
+
+    <!-- Sitemap reference -->
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <SEO {...Astro.props} />
+
+    <!-- SEO meta tags -->
+    <SEO {...seo} />
+
+    <!-- Structured data (JSON-LD) -->
+    <StructuredData {...structuredData} />
   </head>
   <body>
     <SiteHeader />

@@ -2,15 +2,16 @@
 import CheckItem from "@/components/check-item.astro";
 
 interface Props {
+  id: string;
   title: string;
   subtitle: string;
   useCases: string[];
 }
 
-const { title, subtitle, useCases } = Astro.props;
+const { id, title, subtitle, useCases } = Astro.props;
 ---
 
-<section class="border-y bg-muted/30 py-20 md:py-28">
+<section id={id} class="border-y bg-muted/30 py-20 md:py-28">
   <div class="mx-auto max-w-5xl px-4">
     <div class="text-center">
       <h2 class="text-3xl font-bold tracking-tight md:text-4xl">

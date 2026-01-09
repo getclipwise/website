@@ -50,7 +50,11 @@ const badge = isPremium ? "Popular" : undefined;
     {
       features.map((item) => (
         <li class="flex items-center gap-2">
-          <Icon name="lucide:check" class="size-4 text-primary" />
+          <Icon
+            name="lucide:check"
+            class="size-4 text-primary"
+            aria-hidden="true"
+          />
           <span>{item}</span>
         </li>
       ))
@@ -70,7 +74,7 @@ const badge = isPremium ? "Popular" : undefined;
         },
       ]}
     >
-      <Icon name={ctaIcon} class="size-5" />
+      <Icon name={ctaIcon} class="size-5" aria-hidden="true" />
       {ctaLabel}
     </a>
   </div>

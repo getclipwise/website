@@ -1,0 +1,122 @@
+---
+import iconUrl from "@/assets/icon.svg?no-inline";
+import ogImageUrl from "@/assets/og-image.png?url";
+import { siteConfig } from "@/lib/site-config";
+
+export interface Breadcrumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  breadcrumbs: Breadcrumb[];
+  includeProductSchemas?: boolean;
+}
+
+const { breadcrumbs, includeProductSchemas = false } = Astro.props;
+
+const siteUrl = Astro.site!.href;
+const ogImageURL = new URL(ogImageUrl, Astro.site!).href;
+const logoURL = new URL(iconUrl, Astro.site!).href;
+
+const authorSchema = {
+  "@type": "Person",
+  name: siteConfig.author.name,
+  url: siteConfig.author.website,
+  sameAs: [
+    `https://x.com/${siteConfig.author.twitter.replace("@", "")}`,
+    `https://github.com/${siteConfig.author.github}`,
+  ],
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteUrl,
+  logo: logoURL,
+  description: siteConfig.description,
+  founder: authorSchema,
+  sameAs: [siteConfig.links.chromeWebStore],
+};
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteUrl,
+  applicationCategory: "BrowserApplication",
+  operatingSystem: "Windows, macOS, Linux, Chrome OS",
+  browserRequirements:
+    "Requires a Chromium-based browser (e.g. Chrome, Edge, Brave)",
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Free",
+      price: siteConfig.pricing.free.price,
+      priceCurrency: siteConfig.pricing.currency,
+      description: `${siteConfig.pricing.free.dailyLimit} conversions per day, all features included`,
+    },
+    {
+      "@type": "Offer",
+      name: "Premium",
+      price: siteConfig.pricing.premium.price,
+      priceCurrency: siteConfig.pricing.currency,
+      description: "Unlimited conversions, lifetime access",
+    },
+  ],
+  featureList: [
+    "Convert webpages to Markdown",
+    "Smart content extraction with Mozilla Readability",
+    "Direct integration with ChatGPT and Claude",
+    "Chrome side panel UI",
+    "Dark mode support",
+    "100% private - local processing only",
+    "Works offline",
+  ],
+  downloadUrl: siteConfig.links.chromeWebStore,
+  installUrl: siteConfig.links.chromeWebStore,
+  screenshot: ogImageURL,
+  author: authorSchema,
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.path, Astro.site!).href,
+  })),
+};
+
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteUrl,
+  description: siteConfig.description,
+  publisher: {
+    "@type": "Organization",
+    name: siteConfig.name,
+  },
+};
+
+const schemas = [
+  organizationSchema,
+  breadcrumbSchema,
+  ...(includeProductSchemas ? [softwareApplicationSchema, webSiteSchema] : []),
+];
+---
+
+{
+  schemas.map((schema) => (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(schema, null, 0)}
+    />
+  ))
+}

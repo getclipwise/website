@@ -3,15 +3,16 @@ import NumberedStep from "@/components/numbered-step.astro";
 import type { Step } from "@/types";
 
 interface Props {
+  id: string;
   title: string;
   subtitle: string;
   steps: Step[];
 }
 
-const { title, subtitle, steps } = Astro.props;
+const { id, title, subtitle, steps } = Astro.props;
 ---
 
-<section class="border-y bg-muted/30 py-20 md:py-28">
+<section id={id} class="border-y bg-muted/30 py-20 md:py-28">
   <div class="mx-auto max-w-5xl px-4">
     <div class="text-center">
       <h2 class="text-3xl font-bold tracking-tight md:text-4xl">

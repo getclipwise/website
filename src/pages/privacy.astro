@@ -3,8 +3,16 @@ import RootLayout from "@/layouts/root-layout.astro";
 ---
 
 <RootLayout
-  title="Privacy Policy"
-  description="Privacy Policy for Clipwise AI Chrome Extension"
+  seo={{
+    title: "Privacy Policy",
+    description: "Privacy Policy for Clipwise AI Chrome Extension",
+  }}
+  structuredData={{
+    breadcrumbs: [
+      { name: "Home", path: "/" },
+      { name: "Privacy Policy", path: "/privacy/" },
+    ],
+  }}
 >
   <main id="main-content" class="py-12">
     <article class="mx-auto max-w-4xl space-y-8 px-4">
@@ -16,7 +24,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </header>
 
-      <section class="space-y-4">
+      <section id="overview" class="space-y-4">
         <h2 class="text-2xl font-semibold">Overview</h2>
         <p class="text-muted-foreground">
           Clipwise AI is a browser extension that converts webpages to Markdown
@@ -25,7 +33,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="data-controller" class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Controller</h2>
         <p class="text-muted-foreground">
           The data controller for Clipwise AI is Dennis Morello, an independent
@@ -39,7 +47,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="data-collection" class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Collection</h2>
         <p class="font-semibold">
           Clipwise AI does not collect, store, or transmit any personal data or
@@ -55,7 +63,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="legal-basis" class="space-y-4">
         <h2 class="text-2xl font-semibold">Legal Basis for Processing</h2>
         <p class="text-muted-foreground">
           Under the
@@ -111,7 +119,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="how-it-works" class="space-y-4">
         <h2 class="text-2xl font-semibold">How the Extension Works</h2>
         <p class="text-muted-foreground">
           When you click the Clipwise AI extension icon:
@@ -135,7 +143,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </ol>
       </section>
 
-      <section class="space-y-4">
+      <section id="permissions" class="space-y-4">
         <h2 class="text-2xl font-semibold">Permissions Explained</h2>
         <p class="text-muted-foreground">
           Clipwise AI requests the following permissions:
@@ -198,7 +206,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </dl>
       </section>
 
-      <section class="space-y-4">
+      <section id="ai-integration" class="space-y-4">
         <h2 class="text-2xl font-semibold">Open in ChatGPT/Claude Feature</h2>
         <p class="text-muted-foreground">
           Clipwise AI includes an optional feature to send your converted
@@ -252,7 +260,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </ul>
       </section>
 
-      <section class="space-y-4">
+      <section id="license-validation" class="space-y-4">
         <h2 class="text-2xl font-semibold">Premium License Validation</h2>
         <p class="text-muted-foreground">
           If you purchase a premium license, the extension communicates with
@@ -281,7 +289,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="data-sharing" class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Sharing</h2>
         <p class="text-muted-foreground">
           We do not share your webpage content or browsing data with any third
@@ -291,7 +299,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="third-party-services" class="space-y-4">
         <h2 class="text-2xl font-semibold">Third-Party Services</h2>
         <p class="text-muted-foreground">
           Clipwise AI may interact with the following third-party services:
@@ -361,7 +369,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="data-security" class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Security</h2>
         <p class="text-muted-foreground">
           Since all processing occurs locally within your browser and no data is
@@ -369,7 +377,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="data-retention" class="space-y-4">
         <h2 class="text-2xl font-semibold">Data Retention</h2>
         <p class="text-muted-foreground">
           We retain data according to the following criteria:
@@ -398,7 +406,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </dl>
       </section>
 
-      <section class="space-y-4">
+      <section id="your-rights" class="space-y-4">
         <h2 class="text-2xl font-semibold">Your Rights</h2>
         <p class="text-muted-foreground">
           Under
@@ -502,7 +510,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="international-transfers" class="space-y-4">
         <h2 class="text-2xl font-semibold">International Data Transfers</h2>
         <p class="text-muted-foreground">
           Clipwise AI is available worldwide. While all webpage content
@@ -527,7 +535,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="childrens-privacy" class="space-y-4">
         <h2 class="text-2xl font-semibold">Children's Privacy</h2>
         <p class="text-muted-foreground">
           Clipwise AI does not knowingly collect any personal data from children
@@ -537,7 +545,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="changes" class="space-y-4">
         <h2 class="text-2xl font-semibold">Changes to This Policy</h2>
         <p class="text-muted-foreground">
           We may update this privacy policy from time to time. Any changes will
@@ -545,7 +553,7 @@ import RootLayout from "@/layouts/root-layout.astro";
         </p>
       </section>
 
-      <section class="space-y-4">
+      <section id="contact" class="space-y-4">
         <h2 class="text-2xl font-semibold">Contact</h2>
         <p class="text-muted-foreground">
           If you have questions about this privacy policy, please contact us at

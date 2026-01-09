@@ -12,7 +12,7 @@ import type { Feature, PricingTier, Step, TrustBadge } from "@/types";
 
 const formattedPrice = new Intl.NumberFormat(siteConfig.locale, {
   style: "currency",
-  currency: siteConfig.pricing.premium.currency,
+  currency: siteConfig.pricing.currency,
 }).format(siteConfig.pricing.premium.price);
 
 const features: Feature[] = [
@@ -96,7 +96,7 @@ const pricingTiers: PricingTier[] = [
     price: "$0",
     priceSuffix: "/forever",
     features: [
-      "10 conversions per day",
+      `${siteConfig.pricing.free.dailyLimit} conversions per day`,
       "All features included",
       "100% private processing",
       "Works offline",
@@ -127,13 +127,22 @@ const pricingTiers: PricingTier[] = [
 ];
 
 const trustBadges: TrustBadge[] = [
-  { icon: "lucide:gift", label: "10 Free Daily" },
+  {
+    icon: "lucide:gift",
+    label: `${siteConfig.pricing.free.dailyLimit} Free Daily`,
+  },
   { icon: "lucide:shield-check", label: "100% Private" },
   { icon: "lucide:zap", label: "Instant Conversion" },
 ];
 ---
 
-<RootLayout title="Webpages to Markdown for AI">
+<RootLayout
+  seo={{ title: "Webpages to Markdown for AI" }}
+  structuredData={{
+    breadcrumbs: [{ name: "Home", path: "/" }],
+    includeProductSchemas: true,
+  }}
+>
   <main id="main-content">
     <HeroSection
       badge="Now available on Chrome Web Store"
@@ -147,24 +156,28 @@ const trustBadges: TrustBadge[] = [
     />
 
     <HowItWorksSection
+      id="how-it-works"
       title="How it works"
       subtitle="Three simple steps. No configuration needed."
       steps={steps}
     />
 
     <FeaturesSection
+      id="features"
       title="Everything you need"
       subtitle="Powerful features designed for the AI workflow"
       features={features}
     />
 
     <UseCasesSection
+      id="use-cases"
       title="Perfect for"
       subtitle="Supercharge your AI workflow"
       useCases={useCases}
     />
 
     <PrivacySection
+      id="privacy"
       badgeText="Privacy First"
       title="Your data never leaves your browser"
       description="Clipwise AI processes everything locally. We can't see what you convert because the data never leaves your device."
@@ -172,6 +185,7 @@ const trustBadges: TrustBadge[] = [
     />
 
     <PricingSection
+      id="pricing"
       title="Simple, transparent pricing"
       subtitle="Start free. Upgrade when you need more."
       tiers={pricingTiers}
@@ -179,8 +193,9 @@ const trustBadges: TrustBadge[] = [
     />
 
     <FinalCtaSection
+      id="get-started"
       title="Ready to supercharge your AI workflow?"
-      subtitle="Start with 10 free conversions daily. Upgrade anytime for unlimited access."
+      subtitle={`Start with ${siteConfig.pricing.free.dailyLimit} free conversions daily. Upgrade anytime for unlimited access.`}
       disclaimer="No account required • No credit card needed"
     />
   </main>

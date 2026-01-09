@@ -3,15 +3,16 @@ import FeatureCard from "@/components/feature-card.astro";
 import type { Feature } from "@/types";
 
 interface Props {
+  id: string;
   title: string;
   subtitle: string;
   features: Feature[];
 }
 
-const { title, subtitle, features } = Astro.props;
+const { id, title, subtitle, features } = Astro.props;
 ---
 
-<section class="py-20 md:py-28">
+<section id={id} class="py-20 md:py-28">
   <div class="mx-auto max-w-6xl px-4">
     <div class="text-center">
       <h2 class="text-3xl font-bold tracking-tight md:text-4xl">

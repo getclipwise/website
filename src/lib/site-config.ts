@@ -17,9 +17,13 @@ export const siteConfig = {
       "https://shop.getclipwise.app/checkout/buy/30ad71d7-8b6f-476c-8925-5f8259d44cc8",
   },
   pricing: {
+    currency: "USD",
+    free: {
+      price: 0,
+      dailyLimit: 10,
+    },
     premium: {
       price: 9.99,
-      currency: "USD",
     },
   },
 } as const;

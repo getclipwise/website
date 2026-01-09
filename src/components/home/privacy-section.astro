@@ -2,16 +2,17 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
+  id: string;
   badgeText: string;
   title: string;
   description: string;
   highlights: string[];
 }
 
-const { badgeText, title, description, highlights } = Astro.props;
+const { id, badgeText, title, description, highlights } = Astro.props;
 ---
 
-<section class="py-20 md:py-28">
+<section id={id} class="py-20 md:py-28">
   <div class="mx-auto max-w-4xl px-4">
     <div
       class="relative overflow-hidden rounded-3xl border bg-linear-to-br from-emerald-500/5 via-card to-card p-8 md:p-12 dark:from-emerald-500/10"

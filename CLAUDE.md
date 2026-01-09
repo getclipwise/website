@@ -38,13 +38,18 @@ pnpm astro ...        # Run Astro CLI commands
 ### Project Structure
 
 ```text
+docs/
+└── *.md                 # Documentation (SEO strategy, etc.)
+
 src/
 ├── assets/              # Static assets (icon.svg, og-image.png)
 ├── components/
 │   ├── home/           # Home page sections (hero, features, pricing, etc.)
-│   └── *.astro         # Reusable components (header, footer, SEO, cards)
+│   ├── seo.astro       # SEO meta tags (OG, Twitter Cards)
+│   ├── structured-data.astro  # JSON-LD structured data schemas
+│   └── *.astro         # Reusable components (header, footer, cards)
 ├── layouts/
-│   └── root-layout.astro  # Base HTML layout
+│   └── root-layout.astro  # Base HTML layout with SEO
 ├── lib/
 │   └── site-config.ts    # Centralized site configuration
 ├── pages/
@@ -88,12 +93,14 @@ src/
 - Import assets with `?url` suffix: `import faviconUrl from "@/assets/icon.svg?url"`
 - Sharp processes images automatically during build
 
-**6. SEO & Meta**
+**6. SEO & Structured Data**
 
-- `SEO.astro` component generates all meta tags (Open Graph, Twitter Cards)
-- Accepts `title`, `titleTemplate`, `description` props
-- Automatically constructs canonical URLs and OG image paths
-- Root layout (`root-layout.astro`) includes SEO component in `<head>`
+See [`docs/SEO.md`](docs/SEO.md) for the complete SEO strategy.
+
+Key components:
+
+- `seo.astro` — Meta tags, Open Graph, Twitter Cards
+- `structured-data.astro` — JSON-LD schemas (Organization, BreadcrumbList, SoftwareApplication, WebSite)
 
 **7. Site URL Configuration**
 

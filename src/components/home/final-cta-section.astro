@@ -2,15 +2,16 @@
 import AddToChromeButton from "@/components/add-to-chrome-button.astro";
 
 interface Props {
+  id: string;
   title: string;
   subtitle: string;
   disclaimer: string;
 }
 
-const { title, subtitle, disclaimer } = Astro.props;
+const { id, title, subtitle, disclaimer } = Astro.props;
 ---
 
-<section class="py-24 md:py-32">
+<section id={id} class="py-24 md:py-32">
   <div class="mx-auto max-w-3xl px-4 text-center">
     <h2 class="text-3xl font-bold tracking-tight md:text-4xl">
       {title}
