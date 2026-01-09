@@ -1,8 +1,7 @@
 ---
-import iconSrc from "@/assets/icon.svg";
+import Logo from "@/assets/icon.svg";
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
-import { Image } from "astro:assets";
 
 /** Normalize pathname by removing trailing slash (except for root "/") */
 function normalizePath(path: string) {
@@ -38,14 +37,7 @@ const currentPath = normalizePath(Astro.url.pathname);
         href="/"
         class="flex items-center gap-2.5 font-semibold text-white no-underline transition-opacity hover:opacity-90"
       >
-        <Image
-          src={iconSrc}
-          alt=""
-          width={36}
-          height={36}
-          priority
-          class="size-9 drop-shadow-md"
-        />
+        <Logo width={36} height={36} class="size-9 drop-shadow-md" />
         <span class="text-lg tracking-tight">{siteConfig.name}</span>
       </a>
       <ul class="m-0 flex list-none items-center gap-6 p-0">
