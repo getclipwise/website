@@ -2,18 +2,28 @@
 import iconUrl from "@/assets/icon.svg?no-inline";
 import ogImageUrl from "@/assets/og-image.png?url";
 import { siteConfig } from "@/lib/site-config";
+import type { Feature, PricingTier } from "@/types";
 
-export interface Breadcrumb {
+interface Breadcrumb {
   name: string;
   path: string;
 }
 
-interface Props {
+interface BaseProps {
   breadcrumbs: Breadcrumb[];
-  includeProductSchemas?: boolean;
 }
 
-const { breadcrumbs, includeProductSchemas = false } = Astro.props;
+type WebsiteProps = BaseProps & { type: "website" };
+type WebAppProps = BaseProps & {
+  type: "webapp";
+  pricingTiers: PricingTier[];
+  features: Feature[];
+};
+type Props = WebsiteProps | WebAppProps;
+
+const props = Astro.props;
+const { breadcrumbs } = props;
+const isWebApp = props.type === "webapp";
 
 const siteUrl = Astro.site!.href;
 const ogImageURL = new URL(ogImageUrl, Astro.site!).href;
@@ -40,6 +50,20 @@ const organizationSchema = {
   sameAs: [siteConfig.links.chromeWebStore],
 };
 
+const offers = isWebApp
+  ? props.pricingTiers.map((tier) => ({
+      "@type": "Offer",
+      name: tier.name,
+      price: tier.price,
+      priceCurrency: siteConfig.pricing.currency,
+      description: tier.features.join(", "),
+    }))
+  : [];
+
+const featureList = isWebApp
+  ? props.features.map((feature) => feature.title)
+  : [];
+
 const webApplicationSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
@@ -50,31 +74,8 @@ const webApplicationSchema = {
   operatingSystem: "Windows, macOS, Linux, Chrome OS",
   browserRequirements:
     "Requires a Chromium-based browser (e.g. Chrome, Edge, Brave)",
-  offers: [
-    {
-      "@type": "Offer",
-      name: "Free",
-      price: siteConfig.pricing.free.price,
-      priceCurrency: siteConfig.pricing.currency,
-      description: `${siteConfig.pricing.free.dailyLimit} conversions per day, all features included`,
-    },
-    {
-      "@type": "Offer",
-      name: "Premium",
-      price: siteConfig.pricing.premium.price,
-      priceCurrency: siteConfig.pricing.currency,
-      description: "Unlimited conversions, lifetime access",
-    },
-  ],
-  featureList: [
-    "Convert webpages to Markdown",
-    "Smart content extraction with Mozilla Readability",
-    "Direct integration with ChatGPT and Claude",
-    "Chrome side panel UI",
-    "Dark mode support",
-    "100% private - local processing only",
-    "Works offline",
-  ],
+  offers,
+  featureList,
   downloadUrl: siteConfig.links.chromeWebStore,
   installUrl: siteConfig.links.chromeWebStore,
   screenshot: ogImageURL,
@@ -107,7 +108,7 @@ const webSiteSchema = {
 const schemas = [
   organizationSchema,
   breadcrumbSchema,
-  ...(includeProductSchemas ? [webApplicationSchema, webSiteSchema] : []),
+  ...(isWebApp ? [webApplicationSchema, webSiteSchema] : []),
 ];
 ---
 

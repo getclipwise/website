@@ -8,139 +8,38 @@ import PrivacySection from "@/components/home/privacy-section.astro";
 import UseCasesSection from "@/components/home/use-cases-section.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import { siteConfig } from "@/lib/site-config";
-import type { Feature, PricingTier, Step, TrustBadge } from "@/types";
+import { interpolate } from "@/utils/interpolate";
+import { getCollection } from "astro:content";
 
-const formattedPrice = new Intl.NumberFormat(siteConfig.locale, {
-  style: "currency",
-  currency: siteConfig.pricing.currency,
-}).format(siteConfig.pricing.premium.price);
+const pricingPlaceholders = {
+  freeDailyLimit: siteConfig.pricing.freeDailyLimit,
+};
 
-const features: Feature[] = [
-  {
-    icon: "lucide:lightbulb",
-    title: "Smart Extraction",
-    description:
-      "Powered by Mozilla Readability — the same technology behind Firefox Reader View. Automatically removes ads, navigation, and clutter.",
-  },
-  {
-    icon: "lucide:file-text",
-    title: "Beautiful Markdown",
-    description:
-      "Preserves headings, lists, links, tables, code blocks, and text formatting. Images are stripped for cleaner AI context.",
-  },
-  {
-    icon: "lucide:palette",
-    title: "Syntax Highlighting",
-    description:
-      "Markdown is beautifully rendered with color-coded syntax for headers, links, bold, and other formatting.",
-  },
-  {
-    icon: "lucide:send",
-    title: "Direct AI Integration",
-    description:
-      "Open directly in ChatGPT or Claude with one click, or copy the Markdown to use anywhere.",
-  },
-  {
-    icon: "lucide:panel-right",
-    title: "Side Panel UI",
-    description:
-      "Uses Chrome's native side panel for a seamless, non-intrusive experience. Your content stays visible while you browse.",
-  },
-  {
-    icon: "lucide:moon",
-    title: "Dark Mode",
-    description:
-      "Automatically matches your system's dark or light mode preference. Easy on the eyes, day or night.",
-  },
-];
-
-const steps: Step[] = [
-  {
-    title: "Browse any webpage",
-    description:
-      "Navigate to any article, documentation, or webpage you want to share with AI.",
-  },
-  {
-    title: "Click the extension",
-    description:
-      "One click opens the side panel with beautifully formatted Markdown content.",
-  },
-  {
-    title: "Send to AI",
-    description:
-      "Open directly in ChatGPT or Claude, or copy to any AI assistant of your choice.",
-  },
-];
-
-const useCases = [
-  "Summarizing long articles",
-  "Analyzing research papers",
-  "Understanding documentation",
-  "Asking questions about news",
-  "Feeding context to AI coding assistants",
-  "Saving articles in portable format",
-];
-
-const privacyHighlights = [
-  "Page content processed locally",
-  "No data sent to our servers",
-  "No analytics or tracking",
-  "Works completely offline",
-];
-
-const pricingTiers: PricingTier[] = [
-  {
-    tier: "free",
-    name: "Free",
-    tagline: "Perfect for occasional use",
-    price: "$0",
-    priceSuffix: "/forever",
-    features: [
-      `${siteConfig.pricing.free.dailyLimit} conversions per day`,
-      "All features included",
-      "100% private processing",
-      "Works offline",
-      "No account required",
-    ],
-    ctaLabel: "Add to Chrome",
-    ctaHref: siteConfig.links.chromeWebStore,
-    ctaIcon: "simple-icons:googlechrome",
-  },
-  {
-    tier: "premium",
-    name: "Premium",
-    tagline: "For power users and professionals",
-    price: formattedPrice,
-    priceSuffix: "/lifetime",
-    features: [
-      "Unlimited conversions",
-      "All features included",
-      "100% private processing",
-      "Works offline",
-      "One-time payment",
-      "Lifetime updates",
-    ],
-    ctaLabel: "Get Premium",
-    ctaHref: siteConfig.links.premiumCheckout,
-    ctaIcon: "lucide:sparkles",
-  },
-];
-
-const trustBadges: TrustBadge[] = [
-  {
-    icon: "lucide:gift",
-    label: `${siteConfig.pricing.free.dailyLimit} Free Daily`,
-  },
-  { icon: "lucide:shield-check", label: "100% Private" },
-  { icon: "lucide:zap", label: "Instant Conversion" },
-];
+const features = (await getCollection("features")).map((entry) => entry.data);
+const steps = (await getCollection("steps")).map((entry) => entry.data);
+const useCases = (await getCollection("useCases")).map(
+  (entry) => entry.data.label
+);
+const privacyHighlights = (await getCollection("privacyHighlights")).map(
+  (entry) => entry.data.label
+);
+const pricingTiers = (await getCollection("pricingTiers")).map((entry) => ({
+  ...entry.data,
+  features: entry.data.features.map((f) => interpolate(f, pricingPlaceholders)),
+}));
+const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
+  ...entry.data,
+  label: interpolate(entry.data.label, pricingPlaceholders),
+}));
 ---
 
 <RootLayout
   seo={{ title: "Webpages to Markdown for AI" }}
   structuredData={{
+    type: "webapp",
     breadcrumbs: [{ name: "Home", path: "/" }],
-    includeProductSchemas: true,
+    pricingTiers,
+    features,
   }}
 >
   <main id="main-content">
@@ -195,7 +94,7 @@ const trustBadges: TrustBadge[] = [
     <FinalCtaSection
       id="get-started"
       title="Ready to supercharge your AI workflow?"
-      subtitle={`Start with ${siteConfig.pricing.free.dailyLimit} free conversions daily. Upgrade anytime for unlimited access.`}
+      subtitle={`Start with ${siteConfig.pricing.freeDailyLimit} free conversions daily. Upgrade anytime for unlimited access.`}
       disclaimer="No account required • No credit card needed"
     />
   </main>

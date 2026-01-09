@@ -1,32 +1,11 @@
-export interface Feature {
-  icon: string;
-  title: string;
-  description: string;
-}
+import type { CollectionEntry } from "astro:content";
 
-export interface Step {
-  title: string;
-  description: string;
-}
-
-export type TierType = "free" | "premium";
-
-export interface PricingTier {
-  tier: TierType;
-  name: string;
-  tagline: string;
-  price: string;
-  priceSuffix: string;
-  features: string[];
-  ctaLabel: string;
-  ctaHref: string;
-  ctaIcon: string;
-}
-
-export interface TrustBadge {
-  icon: string;
-  label: string;
-}
+export type Feature = CollectionEntry<"features">["data"];
+export type Step = CollectionEntry<"steps">["data"];
+export type UseCase = CollectionEntry<"useCases">["data"];
+export type PrivacyHighlight = CollectionEntry<"privacyHighlights">["data"];
+export type PricingTier = CollectionEntry<"pricingTiers">["data"];
+export type TrustBadge = CollectionEntry<"trustBadges">["data"];
 
 export interface Headline {
   prefix: string;

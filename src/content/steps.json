@@ -1,0 +1,17 @@
+[
+  {
+    "id": "browse",
+    "title": "Browse any webpage",
+    "description": "Navigate to any article, documentation, or webpage you want to share with AI."
+  },
+  {
+    "id": "click",
+    "title": "Click the extension",
+    "description": "One click opens the side panel with beautifully formatted Markdown content."
+  },
+  {
+    "id": "send",
+    "title": "Send to AI",
+    "description": "Open directly in ChatGPT or Claude, or copy to any AI assistant of your choice."
+  }
+]

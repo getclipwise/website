@@ -1,0 +1,38 @@
+[
+  {
+    "id": "smart-extraction",
+    "icon": "lucide:lightbulb",
+    "title": "Smart Extraction",
+    "description": "Powered by Mozilla Readability — the same technology behind Firefox Reader View. Automatically removes ads, navigation, and clutter."
+  },
+  {
+    "id": "beautiful-markdown",
+    "icon": "lucide:file-text",
+    "title": "Beautiful Markdown",
+    "description": "Preserves headings, lists, links, tables, code blocks, and text formatting. Images are stripped for cleaner AI context."
+  },
+  {
+    "id": "syntax-highlighting",
+    "icon": "lucide:palette",
+    "title": "Syntax Highlighting",
+    "description": "Markdown is beautifully rendered with color-coded syntax for headers, links, bold, and other formatting."
+  },
+  {
+    "id": "direct-ai-integration",
+    "icon": "lucide:send",
+    "title": "Direct AI Integration",
+    "description": "Open directly in ChatGPT or Claude with one click, or copy the Markdown to use anywhere."
+  },
+  {
+    "id": "side-panel-ui",
+    "icon": "lucide:panel-right",
+    "title": "Side Panel UI",
+    "description": "Uses Chrome's native side panel for a seamless, non-intrusive experience. Your content stays visible while you browse."
+  },
+  {
+    "id": "dark-mode",
+    "icon": "lucide:moon",
+    "title": "Dark Mode",
+    "description": "Automatically matches your system's dark or light mode preference. Easy on the eyes, day or night."
+  }
+]

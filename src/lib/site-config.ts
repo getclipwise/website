@@ -18,12 +18,6 @@ export const siteConfig = {
   },
   pricing: {
     currency: "USD",
-    free: {
-      price: 0,
-      dailyLimit: 10,
-    },
-    premium: {
-      price: 9.99,
-    },
+    freeDailyLimit: 10,
   },
 } as const;

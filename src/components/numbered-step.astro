@@ -1,7 +1,7 @@
 ---
 import type { Step } from "@/types";
 
-interface Props extends Step {
+interface Props extends Omit<Step, "id"> {
   stepNumber: number;
 }
 

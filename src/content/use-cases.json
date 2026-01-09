@@ -1,0 +1,8 @@
+[
+  { "id": "summarizing", "label": "Summarizing long articles" },
+  { "id": "research", "label": "Analyzing research papers" },
+  { "id": "documentation", "label": "Understanding documentation" },
+  { "id": "news", "label": "Asking questions about news" },
+  { "id": "coding", "label": "Feeding context to AI coding assistants" },
+  { "id": "saving", "label": "Saving articles in portable format" }
+]

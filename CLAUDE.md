@@ -44,56 +44,76 @@ docs/
 src/
 ├── assets/              # Static assets (icon.svg, og-image.png)
 ├── components/
-│   ├── home/           # Home page sections (hero, features, pricing, etc.)
-│   ├── seo.astro       # SEO meta tags (OG, Twitter Cards)
+│   ├── home/            # Home page sections (hero, features, pricing, etc.)
+│   ├── seo.astro        # SEO meta tags (OG, Twitter Cards)
 │   ├── structured-data.astro  # JSON-LD structured data schemas
-│   └── *.astro         # Reusable components (header, footer, cards)
+│   └── *.astro          # Reusable components (header, footer, cards)
+├── content/             # Content collections (JSON data files)
+│   ├── features.json
+│   ├── steps.json
+│   ├── use-cases.json
+│   ├── pricing-tiers.json
+│   ├── trust-badges.json
+│   └── privacy-highlights.json
+├── content.config.ts    # Content collection schemas (Zod)
 ├── layouts/
 │   └── root-layout.astro  # Base HTML layout with SEO
 ├── lib/
-│   └── site-config.ts    # Centralized site configuration
+│   └── site-config.ts   # Site metadata and external URLs
 ├── pages/
-│   ├── index.astro      # Home page (composed of home/* sections)
+│   ├── index.astro      # Home page (queries content collections)
 │   ├── privacy.astro    # Privacy policy page
 │   └── robots.txt.ts    # Dynamic robots.txt
 ├── styles/
 │   └── global.css       # Global styles with CSS variable design tokens
-└── types/
-    └── index.ts         # Shared TypeScript types (Feature, Step, PricingTier, etc.)
+├── types/
+│   └── index.ts         # Shared TypeScript types (inferred from content schemas)
+└── utils/
+    ├── format-price.ts  # Price formatting with site locale/currency
+    └── interpolate.ts   # Template string interpolation utility
 ```
 
 ### Key Architectural Patterns
 
-**1. Centralized Configuration**
+**1. Content Collections**
 
-- All site metadata, URLs, pricing, and author info lives in `src/lib/site-config.ts`
+- All structured content lives in `src/content/*.json` files
+- Schemas defined in `src/content.config.ts` using Zod
+- Types in `src/types/index.ts` are inferred from collection schemas via `CollectionEntry<"...">["data"]`
+- Query with `getCollection("collectionName")` from `astro:content`
+- Use `{placeholder}` syntax for dynamic values; interpolate at render time with `interpolate()` from `@/utils/interpolate`
+
+**2. Centralized Configuration**
+
+- Site metadata, external URLs, and dynamic values (e.g., `freeDailyLimit`) live in `src/lib/site-config.ts`
+- Content data (features, pricing, etc.) lives in content collections, NOT in site-config
+- **Avoid duplication**: dynamic values in content JSON should use placeholders like `{freeDailyLimit}`, not hardcoded numbers
 - Export as `const` object for type safety
-- Used by SEO component, layouts, and pages
 
-**2. Component Composition**
+**3. Component Composition**
 
 - Pages compose larger sections from `components/home/*`
 - Sections receive props for content (features, steps, pricing tiers)
-- Keeps page files declarative and data-focused (see `src/pages/index.astro`)
+- Keeps page files declarative and data-focused
 
-**3. Path Aliases**
+**4. Path Aliases**
 
 - `@/*` maps to `./src/*` (configured in `tsconfig.json`)
 - Use `@/components/...`, `@/lib/...`, etc. everywhere
 
-**4. Design System**
+**5. Design System**
 
 - CSS custom properties define color tokens in `src/styles/global.css`
 - Supports light/dark mode via `prefers-color-scheme`
 - OKLCH color space for perceptual uniformity
 - Tailwind v4's `@theme inline` directive maps CSS vars to Tailwind utilities
 
-**5. Asset Handling**
+**6. Asset Handling**
 
 - Import assets with `?url` suffix: `import faviconUrl from "@/assets/icon.svg?url"`
 - Sharp processes images automatically during build
 
-**6. SEO & Structured Data**
+**7. SEO & Structured Data**
 
 See [`docs/SEO.md`](docs/SEO.md) for the complete SEO strategy.
 
@@ -102,14 +122,30 @@ Key components:
 - `seo.astro` — Meta tags, Open Graph, Twitter Cards
 - `structured-data.astro` — JSON-LD schemas (Organization, BreadcrumbList, SoftwareApplication, WebSite)
 
-**7. Site URL Configuration**
+**8. Site URL Configuration**
 
 - `astro.config.mjs` dynamically sets site URL:
   - Production: Uses `VERCEL_PROJECT_PRODUCTION_URL` env var
   - Fallback: `https://www.getclipwise.app`
 - Required for sitemap generation and canonical URLs
 
-## Important Details
+## Code Style Guidelines
+
+### Comments
+
+- **Do NOT add self-evident comments** that merely describe what the code does
+- Comments should explain **why**, not **what**
+- Good: `// Headline is not a collection because it's page-specific`
+- Bad: `// Get features from collection`, `// Map over items`, `// Build the list`
+- HTML section markers (e.g., `<!-- Primary Meta Tags -->`) are acceptable for navigation
+
+### Type Safety
+
+- Extends `astro/tsconfigs/strict` for strictest TypeScript checks
+- Types are inferred from content collection schemas in `src/types/index.ts`
+- Component props use `type Props = SomeType` for direct type aliases
+- Component props use `interface Props extends SomeType` when adding extra props
+- Use explicit type annotations for arrays with union types
 
 ### Styling
 
@@ -123,14 +159,6 @@ Key components:
 - Use `<Icon name="lucide:icon-name" />` or `<Icon name="simple-icons:brand" />`
 - Icon names follow Iconify naming conventions
 
-### Type Safety
-
-- Extends `astro/tsconfigs/strict` for strictest TypeScript checks
-- Shared types live in `src/types/index.ts` (Feature, Step, PricingTier, TrustBadge, Headline)
-- Component props use `type Props = SomeType` for direct type aliases
-- Component props use `interface Props extends SomeType` when adding extra props
-- Use explicit type annotations for arrays with union types (e.g., `const items: SomeType[] = [...]`)
-
 ### Deployment
 
 - Vercel automatically detects Astro and builds with `astro build`
@@ -141,7 +169,7 @@ Key components:
 
 When updating site content:
 
-1. **Text/Copy**: Edit data structures in `src/pages/index.astro` (features, steps, useCases, etc.)
-2. **Links/Pricing**: Update `src/lib/site-config.ts`
+1. **Features/Pricing/Steps**: Edit JSON files in `src/content/`
+2. **External URLs**: Update `src/lib/site-config.ts`
 3. **SEO**: Modify defaults in `site-config.ts` or pass props to `RootLayout`
 4. **Styling**: Edit CSS variables in `src/styles/global.css` for theme changes

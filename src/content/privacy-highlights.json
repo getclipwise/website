@@ -1,0 +1,6 @@
+[
+  { "id": "local-processing", "label": "Page content processed locally" },
+  { "id": "no-data-sent", "label": "No data sent to our servers" },
+  { "id": "no-analytics", "label": "No analytics or tracking" },
+  { "id": "offline", "label": "Works completely offline" }
+]

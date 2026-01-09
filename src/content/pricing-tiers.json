@@ -1,0 +1,37 @@
+[
+  {
+    "id": "free",
+    "tier": "free",
+    "name": "Free",
+    "tagline": "Perfect for occasional use",
+    "price": 0,
+    "priceSuffix": "/forever",
+    "features": [
+      "{freeDailyLimit} conversions per day",
+      "All features included",
+      "100% private processing",
+      "Works offline",
+      "No account required"
+    ],
+    "ctaLabel": "Add to Chrome",
+    "ctaIcon": "simple-icons:googlechrome"
+  },
+  {
+    "id": "premium",
+    "tier": "premium",
+    "name": "Premium",
+    "tagline": "For power users and professionals",
+    "price": 9.99,
+    "priceSuffix": "/lifetime",
+    "features": [
+      "Unlimited conversions",
+      "All features included",
+      "100% private processing",
+      "Works offline",
+      "One-time payment",
+      "Lifetime updates"
+    ],
+    "ctaLabel": "Get Premium",
+    "ctaIcon": "lucide:sparkles"
+  }
+]
