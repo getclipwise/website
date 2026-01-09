@@ -40,9 +40,9 @@ const organizationSchema = {
   sameAs: [siteConfig.links.chromeWebStore],
 };
 
-const softwareApplicationSchema = {
+const webApplicationSchema = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": "WebApplication",
   name: siteConfig.name,
   description: siteConfig.description,
   url: siteUrl,
@@ -107,7 +107,7 @@ const webSiteSchema = {
 const schemas = [
   organizationSchema,
   breadcrumbSchema,
-  ...(includeProductSchemas ? [softwareApplicationSchema, webSiteSchema] : []),
+  ...(includeProductSchemas ? [webApplicationSchema, webSiteSchema] : []),
 ];
 ---
 

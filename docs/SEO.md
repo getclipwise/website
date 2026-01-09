@@ -33,12 +33,12 @@ Social sharing meta tags are included for rich previews when shared on:
 
 JSON-LD schemas help search engines understand the content:
 
-| Schema                | Purpose                            | Included On |
-| --------------------- | ---------------------------------- | ----------- |
-| `Organization`        | Brand identity for Knowledge Panel | All pages   |
-| `BreadcrumbList`      | Site navigation structure          | All pages   |
-| `SoftwareApplication` | Chrome extension product details   | Home page   |
-| `WebSite`             | General site information           | Home page   |
+| Schema           | Purpose                            | Included On |
+| ---------------- | ---------------------------------- | ----------- |
+| `Organization`   | Brand identity for Knowledge Panel | All pages   |
+| `BreadcrumbList` | Site navigation structure          | All pages   |
+| `WebApplication` | Chrome extension product details   | Home page   |
+| `WebSite`        | General site information           | Home page   |
 
 #### Usage
 
