@@ -2,7 +2,7 @@
 import iconUrl from "@/assets/icon.svg?no-inline";
 import ogImageUrl from "@/assets/og-image.png?url";
 import { siteConfig } from "@/lib/site-config";
-import type { Feature, PricingTier } from "@/types";
+import type { Feature, PricingTier, Step } from "@/types";
 
 interface Breadcrumb {
   name: string;
@@ -18,6 +18,7 @@ type WebAppProps = BaseProps & {
   type: "webapp";
   pricingTiers: PricingTier[];
   features: Feature[];
+  steps: Step[];
 };
 type Props = WebsiteProps | WebAppProps;
 
@@ -29,8 +30,10 @@ const siteUrl = Astro.site!.href;
 const ogImageURL = new URL(ogImageUrl, Astro.site!).href;
 const logoURL = new URL(iconUrl, Astro.site!).href;
 
+// Person schema per https://schema.org/Person
 const authorSchema = {
   "@type": "Person",
+  "@id": `${siteUrl}#author`,
   name: siteConfig.author.name,
   url: siteConfig.author.website,
   sameAs: [
@@ -39,24 +42,45 @@ const authorSchema = {
   ],
 };
 
+// Reusable ImageObject for the logo
+const logoImageSchema = {
+  "@type": "ImageObject",
+  "@id": `${siteUrl}#logo`,
+  url: logoURL,
+  width: "512",
+  height: "512",
+};
+
+// Organization schema per https://schema.org/Organization
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${siteUrl}#organization`,
   name: siteConfig.name,
   url: siteUrl,
-  logo: logoURL,
+  logo: logoImageSchema,
   description: siteConfig.description,
   founder: authorSchema,
   sameAs: [siteConfig.links.chromeWebStore],
 };
 
+// Offer schema per https://schema.org/Offer
 const offers = isWebApp
   ? props.pricingTiers.map((tier) => ({
       "@type": "Offer",
       name: tier.name,
-      price: tier.price,
-      priceCurrency: siteConfig.pricing.currency,
       description: tier.features.join(", "),
+      price: tier.price.toString(),
+      priceCurrency: siteConfig.pricing.currency,
+      availability: "https://schema.org/InStock",
+      url: `${siteUrl}#pricing`,
+      seller: { "@id": `${siteUrl}#organization` },
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        price: tier.price.toString(),
+        priceCurrency: siteConfig.pricing.currency,
+        valueAddedTaxIncluded: true,
+      },
     }))
   : [];
 
@@ -64,13 +88,16 @@ const featureList = isWebApp
   ? props.features.map((feature) => feature.title)
   : [];
 
+// WebApplication schema per https://schema.org/WebApplication
 const webApplicationSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
+  "@id": `${siteUrl}#software`,
   name: siteConfig.name,
   description: siteConfig.description,
   url: siteUrl,
   applicationCategory: "BrowserApplication",
+  applicationSubCategory: "Productivity",
   operatingSystem: "Windows, macOS, Linux, Chrome OS",
   browserRequirements:
     "Requires a Chromium-based browser (e.g. Chrome, Edge, Brave)",
@@ -78,37 +105,91 @@ const webApplicationSchema = {
   featureList,
   downloadUrl: siteConfig.links.chromeWebStore,
   installUrl: siteConfig.links.chromeWebStore,
-  screenshot: ogImageURL,
-  author: authorSchema,
+  screenshot: {
+    "@type": "ImageObject",
+    "@id": `${siteUrl}#screenshot`,
+    url: ogImageURL,
+    width: "1200",
+    height: "630",
+  },
+  image: { "@id": `${siteUrl}#logo` },
+  author: { "@id": `${siteUrl}#author` },
+  publisher: { "@id": `${siteUrl}#organization` },
+  softwareHelp: {
+    "@type": "WebPage",
+    "@id": siteUrl,
+    url: siteUrl,
+    name: `${siteConfig.name} Help`,
+  },
 };
 
+// BreadcrumbList schema per https://schema.org/BreadcrumbList
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  itemListElement: breadcrumbs.map((item, index) => ({
+  itemListElement: breadcrumbs.map((breadcrumb, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    name: item.name,
-    item: new URL(item.path, Astro.site!).href,
+    item: {
+      "@id": new URL(breadcrumb.path, Astro.site!).href,
+      name: breadcrumb.name,
+    },
   })),
 };
 
+// WebSite schema per https://schema.org/WebSite
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${siteUrl}#website`,
   name: siteConfig.name,
   url: siteUrl,
   description: siteConfig.description,
-  publisher: {
-    "@type": "Organization",
-    name: siteConfig.name,
-  },
+  publisher: { "@id": `${siteUrl}#organization` },
+  inLanguage: siteConfig.locale,
 };
+
+// HowTo schema per https://schema.org/HowTo
+const howToSchema = isWebApp
+  ? {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: "How to use Clipwise AI to convert webpages to Markdown",
+      description:
+        "Convert any webpage to clean Markdown for AI assistants in three simple steps",
+      image: ogImageURL,
+      totalTime: "PT1M",
+      estimatedCost: {
+        "@type": "MonetaryAmount",
+        currency: siteConfig.pricing.currency,
+        value: "0",
+      },
+      tool: [
+        {
+          "@type": "HowToTool",
+          name: "Clipwise AI Chrome Extension",
+        },
+        {
+          "@type": "HowToTool",
+          name: "Chromium-based browser (Chrome, Edge, Brave)",
+        },
+      ],
+      step: props.steps.map((step, index) => ({
+        "@type": "HowToStep",
+        position: String(index + 1),
+        name: step.title,
+        text: step.description,
+        url: `${siteUrl}#how-it-works`,
+      })),
+    }
+  : null;
 
 const schemas = [
   organizationSchema,
   breadcrumbSchema,
-  ...(isWebApp ? [webApplicationSchema, webSiteSchema] : []),
+  ...(isWebApp
+    ? [webApplicationSchema, webSiteSchema, howToSchema].filter(Boolean)
+    : []),
 ];
 ---
 

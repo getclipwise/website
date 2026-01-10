@@ -8,11 +8,16 @@ import PrivacySection from "@/components/home/privacy-section.astro";
 import UseCasesSection from "@/components/home/use-cases-section.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import { siteConfig } from "@/lib/site-config";
+import { formatPrice } from "@/utils/format-price";
 import { interpolate } from "@/utils/interpolate";
 import { getCollection } from "astro:content";
 
-const pricingPlaceholders = {
+const pricingTiersRaw = await getCollection("pricingTiers");
+const premiumTier = pricingTiersRaw.find((t) => t.data.tier === "premium")!;
+
+const placeholders = {
   freeDailyLimit: siteConfig.pricing.freeDailyLimit,
+  premiumPrice: formatPrice(premiumTier.data.price),
 };
 
 const features = (await getCollection("features")).map((entry) => entry.data);
@@ -23,13 +28,13 @@ const useCases = (await getCollection("useCases")).map(
 const privacyHighlights = (await getCollection("privacyHighlights")).map(
   (entry) => entry.data.label
 );
-const pricingTiers = (await getCollection("pricingTiers")).map((entry) => ({
+const pricingTiers = pricingTiersRaw.map((entry) => ({
   ...entry.data,
-  features: entry.data.features.map((f) => interpolate(f, pricingPlaceholders)),
+  features: entry.data.features.map((f) => interpolate(f, placeholders)),
 }));
 const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
   ...entry.data,
-  label: interpolate(entry.data.label, pricingPlaceholders),
+  label: interpolate(entry.data.label, placeholders),
 }));
 ---
 
@@ -40,6 +45,7 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
     breadcrumbs: [{ name: "Home", path: "/" }],
     pricingTiers,
     features,
+    steps,
   }}
 >
   <main id="main-content">
