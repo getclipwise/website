@@ -27,12 +27,16 @@ Clipwise AI follows Google/Bing structured data and on-page SEO best practices.
 
   Entity `@id` map (reuse before adding new):
 
-  - `#organization` → Organization; used by Offer.seller, WebApplication.publisher, WebSite.publisher
-  - `#author` → Person; used by Organization.founder, WebApplication.author
-  - `#logo` → ImageObject; used by Organization.logo, WebApplication.image
-  - `#screenshot` → ImageObject; used by WebApplication.screenshot
-  - `#software` → WebApplication
-  - `#website` → WebSite
+  | `@id`                     | Type           | Used by                                                           |
+  | ------------------------- | -------------- | ----------------------------------------------------------------- |
+  | `https://morello.dev/#me` | Person         | Organization.founder, WebApplication.author (canonical, external) |
+  | `{siteUrl}#organization`  | Organization   | Offer.seller, WebApplication.publisher, WebSite.publisher         |
+  | `{siteUrl}#logo`          | ImageObject    | Organization.logo, WebApplication.image                           |
+  | `{siteUrl}#screenshot`    | ImageObject    | WebApplication.screenshot                                         |
+  | `{siteUrl}#software`      | WebApplication | —                                                                 |
+  | `{siteUrl}#website`       | WebSite        | —                                                                 |
+
+  **Cross-site entity linking:** The Person entity uses a canonical `@id` (`https://morello.dev/#me`) hosted on the author's personal website. This site only references it — the full Person schema with `sameAs` links is defined on morello.dev. Search engines resolve the `@id` across crawls to connect the entities in their Knowledge Graph.
 
 - Sitemap & robots: `@astrojs/sitemap` generates `/sitemap-index.xml`; `/robots.txt` links to it.
 - Section anchors: Home uses `#how-it-works`, `#features`, `#use-cases`, `#privacy`, `#pricing`, `#get-started`.

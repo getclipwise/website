@@ -30,22 +30,23 @@ const siteUrl = Astro.site!.href;
 const ogImageURL = new URL(ogImageUrl, Astro.site!).href;
 const logoURL = new URL(iconUrl, Astro.site!).href;
 
-// Person schema per https://schema.org/Person
-const authorSchema = {
-  "@type": "Person",
-  "@id": `${siteUrl}#author`,
-  name: siteConfig.author.name,
-  url: siteConfig.author.website,
-  sameAs: [
-    `https://x.com/${siteConfig.author.twitter.replace("@", "")}`,
-    `https://github.com/${siteConfig.author.github}`,
-  ],
-};
+// Entity ID generators
+const authorId = () => `${siteConfig.author.website}#me`;
+const logoId = () => `${siteUrl}#logo`;
+const organizationId = () => `${siteUrl}#organization`;
+const softwareId = () => `${siteUrl}#software`;
+const screenshotId = () => `${siteUrl}#screenshot`;
+const websiteId = () => `${siteUrl}#website`;
+
+// Entity reference generators
+const authorRef = () => ({ "@id": authorId() });
+const logoRef = () => ({ "@id": logoId() });
+const organizationRef = () => ({ "@id": organizationId() });
 
 // Reusable ImageObject for the logo
 const logoImageSchema = {
   "@type": "ImageObject",
-  "@id": `${siteUrl}#logo`,
+  "@id": logoId(),
   url: logoURL,
   width: "512",
   height: "512",
@@ -55,12 +56,12 @@ const logoImageSchema = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": `${siteUrl}#organization`,
+  "@id": organizationId(),
   name: siteConfig.name,
   url: siteUrl,
   logo: logoImageSchema,
   description: siteConfig.description,
-  founder: authorSchema,
+  founder: authorRef(),
   sameAs: [siteConfig.links.chromeWebStore],
 };
 
@@ -74,7 +75,7 @@ const offers = isWebApp
       priceCurrency: siteConfig.pricing.currency,
       availability: "https://schema.org/InStock",
       url: `${siteUrl}#pricing`,
-      seller: { "@id": `${siteUrl}#organization` },
+      seller: organizationRef(),
       priceSpecification: {
         "@type": "PriceSpecification",
         price: tier.price.toString(),
@@ -92,7 +93,7 @@ const featureList = isWebApp
 const webApplicationSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "@id": `${siteUrl}#software`,
+  "@id": softwareId(),
   name: siteConfig.name,
   description: siteConfig.description,
   url: siteUrl,
@@ -107,14 +108,14 @@ const webApplicationSchema = {
   installUrl: siteConfig.links.chromeWebStore,
   screenshot: {
     "@type": "ImageObject",
-    "@id": `${siteUrl}#screenshot`,
+    "@id": screenshotId(),
     url: ogImageURL,
     width: "1200",
     height: "630",
   },
-  image: { "@id": `${siteUrl}#logo` },
-  author: { "@id": `${siteUrl}#author` },
-  publisher: { "@id": `${siteUrl}#organization` },
+  image: logoRef(),
+  author: authorRef(),
+  publisher: organizationRef(),
   softwareHelp: {
     "@type": "WebPage",
     "@id": siteUrl,
@@ -141,11 +142,11 @@ const breadcrumbSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${siteUrl}#website`,
+  "@id": websiteId(),
   name: siteConfig.name,
   url: siteUrl,
   description: siteConfig.description,
-  publisher: { "@id": `${siteUrl}#organization` },
+  publisher: organizationRef(),
   inLanguage: siteConfig.locale,
 };
 
