@@ -14,7 +14,15 @@ function getSiteUrl() {
 // https://astro.build/config
 export default defineConfig({
   site: getSiteUrl(),
-  integrations: [sitemap(), icon()],
+  integrations: [
+    sitemap({
+      serialize(item) {
+        item.lastmod = new Date().toISOString();
+        return item;
+      },
+    }),
+    icon(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
