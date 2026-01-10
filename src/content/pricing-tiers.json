@@ -3,13 +3,13 @@
     "id": "free",
     "tier": "free",
     "name": "Free",
-    "tagline": "Perfect for occasional use",
+    "tagline": "For occasional clipping",
     "price": 0,
     "priceSuffix": "/forever",
     "features": [
       "{freeDailyLimit} conversions per day",
-      "All features included",
-      "100% private processing",
+      "Clean, distraction-free Markdown",
+      "100% local & private",
       "Works offline",
       "No account required"
     ],
@@ -20,16 +20,16 @@
     "id": "premium",
     "tier": "premium",
     "name": "Premium",
-    "tagline": "For power users and professionals",
+    "tagline": "For daily AI users",
     "price": 24.99,
     "priceSuffix": "/lifetime",
     "features": [
       "Unlimited conversions",
-      "All features included",
-      "100% private processing",
-      "Works offline",
-      "One-time payment",
-      "Lifetime updates"
+      "No daily limits",
+      "Access to all Premium features",
+      "Lifetime updates included",
+      "Use on up to 3 browsers",
+      "One-time payment, no subscription"
     ],
     "ctaLabel": "Get Premium",
     "ctaIcon": "lucide:sparkles"
