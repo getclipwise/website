@@ -2,9 +2,21 @@
 import Logo from "@/assets/icon.svg";
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
+import { removeTrailingSlash } from "@/utils/url";
 import { Icon } from "astro-icon/components";
 
 const currentYear = new Date().getFullYear();
+
+const currentPath = removeTrailingSlash(Astro.url.pathname);
+
+const footerLinks = [
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Use cases", href: "/#use-cases" },
+  { label: "Pricing", href: "/#pricing" },
+];
+
+const legalLinks = [{ label: "Privacy Policy", href: "/privacy" }];
 
 const socialLinks = [
   {
@@ -44,7 +56,7 @@ const socialLinks = [
             <span class="text-lg tracking-tight">{siteConfig.name}</span>
           </a>
           <p
-            class="max-w-xs text-center text-sm text-emerald-100/70 text-pretty md:text-left"
+            class="max-w-xs text-center text-sm text-emerald-100/70 text-balance md:text-left"
           >
             Convert webpages to clean Markdown for AI assistants.
           </p>
@@ -53,18 +65,56 @@ const socialLinks = [
         <!-- Navigation -->
         <nav
           aria-label="Footer navigation"
-          class="flex items-start justify-center"
+          class="grid grid-cols-2 mx-auto gap-16 md:gap-8"
         >
-          <ul class="m-0 flex list-none gap-6 p-0">
-            <li>
-              <a
-                href="/privacy"
-                class="text-sm text-emerald-100/80 no-underline transition-colors hover:text-white"
-              >
-                Privacy Policy
-              </a>
-            </li>
-          </ul>
+          <div>
+            <h3
+              class="mb-3 text-xs font-semibold uppercase tracking-wider text-emerald-100/50"
+            >
+              Navigate
+            </h3>
+            <ul class="flex flex-col gap-2.5">
+              {
+                footerLinks.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      aria-current={
+                        currentPath === link.href ? "page" : undefined
+                      }
+                      class="text-sm text-emerald-100/80 no-underline transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="mb-3 text-xs font-semibold uppercase tracking-wider text-emerald-100/50"
+            >
+              Legal
+            </h3>
+            <ul class="flex flex-col gap-2.5">
+              {
+                legalLinks.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      aria-current={
+                        currentPath === link.href ? "page" : undefined
+                      }
+                      class="text-sm text-emerald-100/80 no-underline transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </nav>
 
         <!-- Social links -->
@@ -78,7 +128,7 @@ const socialLinks = [
                 aria-label={link.name}
                 class="flex size-10 items-center justify-center rounded-full bg-white/10 text-emerald-100/80 transition-all hover:bg-white/20 hover:text-white"
               >
-                <Icon name={link.icon} class="size-5" />
+                <Icon name={link.icon} class="size-5" aria-hidden="true" />
               </a>
             ))
           }

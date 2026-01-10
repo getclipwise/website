@@ -6,24 +6,24 @@ Clipwise AI follows Google/Bing structured data and on-page SEO best practices.
 
 - Meta tags (`src/components/seo.astro`):
 
-  | Tag                        | Purpose                                  |
-  | -------------------------- | ---------------------------------------- |
-  | `<title>`                  | `%s \| Clipwise AI` template             |
-  | `meta[name="description"]` | Search snippet summary                   |
-  | `meta[name="author"]`      | Content author                           |
-  | `meta[name="robots"]`      | `index, follow, max-image-preview:large` |
-  | `link[rel="canonical"]`    | Canonical URL                            |
+  | Tag                        | Purpose                                                                        |
+  | -------------------------- | ------------------------------------------------------------------------------ |
+  | `<title>`                  | `%s \| Clipwise AI` template                                                   |
+  | `meta[name="description"]` | Search snippet summary                                                         |
+  | `meta[name="author"]`      | Content author                                                                 |
+  | `meta[name="robots"]`      | `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1` |
+  | `link[rel="canonical"]`    | Canonical URL                                                                  |
 
 - Social sharing: Open Graph + Twitter Card tags are preconfigured.
 - Structured data (`src/components/structured-data.astro`):
 
-  | Schema           | Purpose                     | Scope     |
-  | ---------------- | --------------------------- | --------- |
-  | `Organization`   | Brand identity              | All pages |
-  | `BreadcrumbList` | Navigation structure        | All pages |
-  | `WebApplication` | Extension details & pricing | Home      |
-  | `WebSite`        | Site info with publisher    | Home      |
-  | `HowTo`          | Usage steps                 | Home      |
+  | Schema           | Purpose                            | Scope     |
+  | ---------------- | ---------------------------------- | --------- |
+  | `Organization`   | Brand identity                     | All pages |
+  | `BreadcrumbList` | Navigation structure               | All pages |
+  | `WebApplication` | Chrome extension details & pricing | Home      |
+  | `WebSite`        | Site info with publisher           | Home      |
+  | `HowTo`          | Usage steps                        | Home      |
 
   Entity `@id` map (reuse before adding new):
 
@@ -35,7 +35,13 @@ Clipwise AI follows Google/Bing structured data and on-page SEO best practices.
   - `#website` → WebSite
 
 - Sitemap & robots: `@astrojs/sitemap` generates `/sitemap-index.xml`; `/robots.txt` links to it.
-- Section anchors: Home uses `#how-it-works`, `#features`, `#use-cases`, `#privacy`, `#pricing`.
+- Section anchors: Home uses `#how-it-works`, `#features`, `#use-cases`, `#privacy`, `#pricing`, `#get-started`.
+
+## Link attributes
+
+- External links: `rel="noopener noreferrer"` (already applied site-wide)
+- Sponsored/affiliate: add `rel="sponsored nofollow"`
+- User-generated: add `rel="ugc nofollow"`
 
 ## Adding a new page
 

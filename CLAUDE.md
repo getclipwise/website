@@ -61,6 +61,7 @@ src/
 ├── lib/
 │   └── site-config.ts   # Site metadata and external URLs
 ├── pages/
+│   ├── 404.astro        # Custom 404 error page
 │   ├── index.astro      # Home page (queries content collections)
 │   ├── privacy.astro    # Privacy policy page
 │   └── robots.txt.ts    # Dynamic robots.txt
@@ -70,7 +71,8 @@ src/
 │   └── index.ts         # Shared TypeScript types (inferred from content schemas)
 └── utils/
     ├── format-price.ts  # Price formatting with site locale/currency
-    └── interpolate.ts   # Template string interpolation utility
+    ├── interpolate.ts   # Template string interpolation utility
+    └── url.ts           # URL utilities (trailing slash removal)
 ```
 
 ### Key Architectural Patterns
@@ -115,12 +117,7 @@ src/
 
 **7. SEO & Structured Data**
 
-See [`docs/SEO.md`](docs/SEO.md) for the complete SEO strategy.
-
-Key components:
-
-- `seo.astro` — Meta tags, Open Graph, Twitter Cards
-- `structured-data.astro` — JSON-LD schemas (Organization, BreadcrumbList, SoftwareApplication, WebSite)
+See [`docs/SEO.md`](docs/SEO.md) for the complete SEO strategy, including meta tags, structured data schemas, and link-building guidelines.
 
 **8. Site URL Configuration**
 
@@ -173,3 +170,7 @@ When updating site content:
 2. **External URLs**: Update `src/lib/site-config.ts`
 3. **SEO**: Modify defaults in `site-config.ts` or pass props to `RootLayout`
 4. **Styling**: Edit CSS variables in `src/styles/global.css` for theme changes
+
+## Navigation
+
+Header/footer include internal links to home sections (`#how-it-works`, `#features`, `#use-cases`, `#pricing`) plus the privacy page—keep these in sync if section IDs change.

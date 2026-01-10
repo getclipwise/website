@@ -48,6 +48,8 @@
 }
 
 @theme inline {
+  --spacing-header: 4.25rem;
+
   --radius: 0.625rem;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -76,6 +78,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth scroll-pt-header;
   }
 
   body {

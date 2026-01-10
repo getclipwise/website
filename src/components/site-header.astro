@@ -2,13 +2,17 @@
 import Logo from "@/assets/icon.svg";
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
+import { removeTrailingSlash } from "@/utils/url";
+import { Icon } from "astro-icon/components";
 
-/** Normalize pathname by removing trailing slash (except for root "/") */
-function normalizePath(path: string) {
-  return path === "/" ? path : path.replace(/\/$/, "");
-}
+const currentPath = removeTrailingSlash(Astro.url.pathname);
 
-const currentPath = normalizePath(Astro.url.pathname);
+const navLinks = [
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Use cases", href: "/#use-cases" },
+  { label: "Pricing", href: "/#pricing" },
+];
 ---
 
 <a
@@ -19,7 +23,7 @@ const currentPath = normalizePath(Astro.url.pathname);
 </a>
 
 <header
-  class="relative bg-linear-to-r from-emerald-950 via-emerald-900 to-emerald-950 py-4 shadow-lg shadow-emerald-950/20"
+  class="sticky top-0 z-40 bg-linear-to-r from-emerald-950 via-emerald-900 to-emerald-950 shadow-lg shadow-emerald-950/20"
 >
   <!-- Subtle gradient overlay for depth -->
   <div
@@ -31,7 +35,7 @@ const currentPath = normalizePath(Astro.url.pathname);
   <Container>
     <nav
       aria-label="Main navigation"
-      class="relative flex items-center justify-between"
+      class="relative flex h-header items-center justify-between"
     >
       <a
         href="/"
@@ -40,17 +44,113 @@ const currentPath = normalizePath(Astro.url.pathname);
         <Logo width={36} height={36} class="size-9 drop-shadow-md" />
         <span class="text-lg tracking-tight">{siteConfig.name}</span>
       </a>
-      <ul class="m-0 flex list-none items-center gap-6 p-0">
-        <li>
-          <a
-            href="/privacy"
-            aria-current={currentPath === "/privacy" ? "page" : undefined}
-            class="text-sm font-medium text-emerald-100/90 transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
-          >
-            Privacy
-          </a>
-        </li>
-      </ul>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden items-center gap-6 md:flex">
+        <ul class="flex list-none items-center gap-6">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={currentPath === link.href ? "page" : undefined}
+                  class="whitespace-nowrap text-sm font-medium text-emerald-100/90 transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={siteConfig.links.chromeWebStore}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-white px-4 py-2 text-sm font-semibold text-emerald-900 shadow-md transition-all hover:bg-emerald-50 hover:shadow-lg"
+        >
+          <Icon
+            name="simple-icons:googlechrome"
+            class="size-4"
+            aria-hidden="true"
+          />
+          Add to Chrome
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="group flex size-10 items-center justify-center rounded-lg text-emerald-100/90 transition-colors hover:bg-white/10 hover:text-white md:hidden"
+        id="menu-button"
+      >
+        <Icon
+          name="lucide:menu"
+          class="size-6 group-aria-expanded:hidden"
+          aria-hidden="true"
+        />
+        <Icon
+          name="lucide:x"
+          class="hidden size-6 group-aria-expanded:block"
+          aria-hidden="true"
+        />
+      </button>
     </nav>
   </Container>
+
+  <!-- Mobile Navigation (overlay) -->
+  <div
+    id="mobile-menu"
+    class="absolute left-0 right-0 top-header bg-linear-to-r from-emerald-950 via-emerald-900 to-emerald-950 shadow-lg shadow-emerald-950/20 duration-200 md:hidden aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:animate-out aria-hidden:fade-out aria-hidden:slide-out-to-top-2 aria-[hidden=false]:visible aria-[hidden=false]:animate-in aria-[hidden=false]:fade-in aria-[hidden=false]:slide-in-from-top-2"
+    aria-hidden="true"
+  >
+    <div class="mx-auto w-full max-w-7xl px-4">
+      <ul class="flex list-none flex-col gap-2 py-4">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={currentPath === link.href ? "page" : undefined}
+                class="block rounded-lg px-4 py-2.5 text-sm font-medium text-emerald-100/90 transition-colors hover:bg-white/10 hover:text-white aria-[current=page]:bg-white/10 aria-[current=page]:text-white"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
 </header>
+
+<script>
+  const menuButton = document.getElementById("menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileNavLinks = mobileMenu?.querySelectorAll("a");
+
+  function closeMenu() {
+    menuButton?.setAttribute("aria-expanded", "false");
+    mobileMenu?.setAttribute("aria-hidden", "true");
+  }
+
+  function openMenu() {
+    menuButton?.setAttribute("aria-expanded", "true");
+    mobileMenu?.setAttribute("aria-hidden", "false");
+  }
+
+  menuButton?.addEventListener("click", () => {
+    const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  mobileNavLinks?.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+</script>
