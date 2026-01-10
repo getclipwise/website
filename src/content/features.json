@@ -3,7 +3,7 @@
     "id": "smart-extraction",
     "icon": "lucide:lightbulb",
     "title": "Smart Extraction",
-    "description": "Powered by Mozilla Readability — the same technology behind Firefox Reader View. Automatically removes ads, navigation, and clutter."
+    "description": "Powered by Mozilla Readability. Automatically removes ads, navigation, and clutter."
   },
   {
     "id": "beautiful-markdown",

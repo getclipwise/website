@@ -36,7 +36,9 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
     </div>
 
     <!-- Headline -->
-    <h1 class="text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
+    <h1
+      class="text-5xl font-extrabold tracking-tight text-balance md:text-6xl lg:text-7xl"
+    >
       {headline.prefix}
       <span
         class="bg-linear-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent dark:from-emerald-400 dark:to-emerald-300"
@@ -48,7 +50,9 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
     </h1>
 
     <!-- Subheadline -->
-    <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+    <p
+      class="mx-auto mt-6 max-w-2xl text-lg text-balance text-muted-foreground md:text-xl"
+    >
       {subheadline}
     </p>
 

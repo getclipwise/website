@@ -39,7 +39,11 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
 ---
 
 <RootLayout
-  seo={{ title: "Webpages to Markdown for AI" }}
+  seo={{
+    title: "Webpage to Markdown for AI Prompts",
+    description:
+      "Chrome extension that converts any webpage to clean Markdown for AI prompts. Copy and paste into ChatGPT, Claude, Gemini, and more. Private and works offline.",
+  }}
   structuredData={{
     type: "webapp",
     breadcrumbs: [{ name: "Home", path: "/" }],
@@ -52,18 +56,18 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
     <HeroSection
       badge="Now available on Chrome Web Store"
       headline={{
-        prefix: "Webpages to",
-        highlight: "Markdown",
-        suffix: "for AI",
+        prefix: "Any webpage to",
+        highlight: "AI-ready",
+        suffix: "Markdown in one click",
       }}
-      subheadline="Convert any webpage into clean, formatted Markdown with one click. Perfect for ChatGPT, Claude, Gemini, and other AI assistants."
+      subheadline="One click turns any webpage into clean Markdown you can paste into ChatGPT, Claude, Gemini, and more. Removes clutter and keeps formatting."
       trustBadges={trustBadges}
     />
 
     <HowItWorksSection
       id="how-it-works"
       title="How it works"
-      subtitle="Three simple steps. No configuration needed."
+      subtitle="Three simple steps. No setup."
       steps={steps}
     />
 
@@ -92,7 +96,7 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
     <PricingSection
       id="pricing"
       title="Simple, transparent pricing"
-      subtitle="Start free. Upgrade when you need more."
+      subtitle="Free forever. Upgrade when you need more."
       tiers={pricingTiers}
       disclaimer="Free daily conversions reset automatically every day."
     />
@@ -100,7 +104,7 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
     <FinalCtaSection
       id="get-started"
       title="Ready to supercharge your AI workflow?"
-      subtitle={`Start with ${siteConfig.pricing.freeDailyLimit} free conversions daily. Upgrade anytime for unlimited access.`}
+      subtitle={`Start free with ${siteConfig.pricing.freeDailyLimit} conversions daily. Upgrade anytime for unlimited access.`}
       disclaimer="No account required • No credit card needed"
     />
   </main>
