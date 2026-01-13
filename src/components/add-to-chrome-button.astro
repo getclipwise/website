@@ -1,10 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
-import { siteConfig } from "@/lib/site-config";
+import { type UtmCampaign, getChromeStoreUrl } from "@/utils/chrome-store-url";
+
+interface Props {
+  campaign: UtmCampaign;
+}
+
+const { campaign } = Astro.props;
 ---
 
 <a
-  href={siteConfig.links.chromeWebStore}
+  href={getChromeStoreUrl(campaign)}
   target="_blank"
   rel="noopener noreferrer"
   class="group inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

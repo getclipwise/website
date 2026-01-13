@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "@/lib/site-config";
 import type { PricingTier } from "@/types";
+import { getChromeStoreUrl } from "@/utils/chrome-store-url";
 import { formatPrice } from "@/utils/format-price";
 import { Icon } from "astro-icon/components";
 
@@ -13,7 +14,7 @@ const isPremium = tier === "premium";
 const badge = isPremium ? "Popular" : undefined;
 const ctaHref = isPremium
   ? siteConfig.links.premiumCheckout
-  : siteConfig.links.chromeWebStore;
+  : getChromeStoreUrl("pricing-free");
 ---
 
 <div

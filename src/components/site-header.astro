@@ -2,6 +2,7 @@
 import Logo from "@/assets/icon.svg";
 import Container from "@/components/container.astro";
 import { siteConfig } from "@/lib/site-config";
+import { getChromeStoreUrl } from "@/utils/chrome-store-url";
 import { removeTrailingSlash } from "@/utils/url";
 import { Icon } from "astro-icon/components";
 
@@ -63,7 +64,7 @@ const navLinks = [
           }
         </ul>
         <a
-          href={siteConfig.links.chromeWebStore}
+          href={getChromeStoreUrl("header")}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-white px-4 py-2 text-sm font-semibold text-emerald-900 shadow-md transition-all hover:bg-emerald-50 hover:shadow-lg"
