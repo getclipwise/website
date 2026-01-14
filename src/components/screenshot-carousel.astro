@@ -6,7 +6,12 @@ import screenshot04 from "@/assets/screenshots/04.png";
 import { Icon } from "astro-icon/components";
 import { Picture } from "astro:assets";
 
-const screenshots = [screenshot01, screenshot02, screenshot03, screenshot04];
+const screenshots = [
+  { src: screenshot01, title: "One Click. Clean Markdown." },
+  { src: screenshot02, title: "Send to AI. Ready to use." },
+  { src: screenshot03, title: "Code Blocks. Perfectly Preserved." },
+  { src: screenshot04, title: "Light or Dark. Your Choice." },
+];
 ---
 
 <screenshot-carousel class="block w-full">
@@ -15,10 +20,13 @@ const screenshots = [screenshot01, screenshot02, screenshot03, screenshot04];
     tabindex="-1"
   >
     {
-      screenshots.map((screenshot, index) => (
-        <li class="shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
+      screenshots.map(({ title, src }, index) => (
+        <li class="relative shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
+          <p class="absolute inset-x-0 inset-y-1/16 text-center text-xl lg:text-2xl font-medium">
+            {title}
+          </p>
           <Picture
-            src={screenshot}
+            src={src}
             formats={["avif", "webp"]}
             alt={`Screenshot ${index + 1} of ${screenshots.length}`}
             widths={[480, 768, 1024, 1600]}
