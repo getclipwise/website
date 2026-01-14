@@ -1,0 +1,45 @@
+---
+import { Picture } from "astro:assets";
+import screenshot01 from "@/assets/screenshots/01.png";
+import screenshot02 from "@/assets/screenshots/02.png";
+import screenshot03 from "@/assets/screenshots/03.png";
+import screenshot04 from "@/assets/screenshots/04.png";
+
+const screenshots = [screenshot01, screenshot02, screenshot03, screenshot04];
+---
+
+<ul
+  class="w-full px-4 flex gap-4 md:gap-6 lg:gap-8 overflow-x-scroll snap-x snap-mandatory scroll-smooth"
+>
+  {
+    screenshots.map((screenshot, index) => (
+      <li class="shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
+        <Picture
+          src={screenshot}
+          formats={["avif", "webp"]}
+          alt={`Screenshot ${index + 1} of ${screenshots.length}`}
+          class="w-full pointer-events-none select-none aspect-3/4 sm:aspect-square md:aspect-16/10"
+          priority={index === 0}
+          layout="full-width"
+          fit="cover"
+          position="right"
+        />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    scrollbar-width: none;
+  }
+
+  ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  img {
+    object-fit: var(--fit);
+    object-position: var(--pos);
+  }
+</style>

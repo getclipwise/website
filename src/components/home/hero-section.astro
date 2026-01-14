@@ -1,5 +1,6 @@
 ---
 import AddToChromeButton from "@/components/add-to-chrome-button.astro";
+import ScreenshotCarousel from "@/components/screenshot-carousel.astro";
 import StatusBadge from "@/components/status-badge.astro";
 import type { Headline, TrustBadge } from "@/types";
 import { Icon } from "astro-icon/components";
@@ -76,6 +77,11 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
         ))
       }
     </div>
+  </div>
+
+  <!-- Screenshot showcase -->
+  <div class="mt-16 md:mx-auto md:mt-20 md:max-w-6xl">
+    <ScreenshotCarousel />
   </div>
 </section>
 
