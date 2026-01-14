@@ -18,6 +18,8 @@ const screenshots = [screenshot01, screenshot02, screenshot03, screenshot04];
           src={screenshot}
           formats={["avif", "webp"]}
           alt={`Screenshot ${index + 1} of ${screenshots.length}`}
+          widths={[480, 768, 1024, 1600]}
+          sizes="(min-width: 768px) 1030px, 92vw"
           class="w-full pointer-events-none select-none aspect-3/4 sm:aspect-square md:aspect-16/10"
           priority={index === 0}
           layout="full-width"
