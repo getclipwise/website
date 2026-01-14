@@ -32,10 +32,6 @@ const pricingTiers = pricingTiersRaw.map((entry) => ({
   ...entry.data,
   features: entry.data.features.map((f) => interpolate(f, placeholders)),
 }));
-const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
-  ...entry.data,
-  label: interpolate(entry.data.label, placeholders),
-}));
 ---
 
 <RootLayout
@@ -61,7 +57,6 @@ const trustBadges = (await getCollection("trustBadges")).map((entry) => ({
         suffix: "Markdown in one click",
       }}
       subheadline="One click turns any webpage into clean Markdown you can paste into ChatGPT, Claude, Gemini, and more. Removes clutter and keeps formatting."
-      trustBadges={trustBadges}
     />
 
     <HowItWorksSection

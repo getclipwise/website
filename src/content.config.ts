@@ -52,20 +52,10 @@ const pricingTiers = defineCollection({
   }),
 });
 
-const trustBadges = defineCollection({
-  loader: file("src/content/trust-badges.json"),
-  schema: z.object({
-    id: z.string(),
-    icon: z.string(),
-    label: z.string(),
-  }),
-});
-
 export const collections = {
   features,
   steps,
   useCases,
   privacyHighlights,
   pricingTiers,
-  trustBadges,
 };

@@ -2,17 +2,15 @@
 import AddToChromeButton from "@/components/add-to-chrome-button.astro";
 import ScreenshotCarousel from "@/components/screenshot-carousel.astro";
 import StatusBadge from "@/components/status-badge.astro";
-import type { Headline, TrustBadge } from "@/types";
-import { Icon } from "astro-icon/components";
+import type { Headline } from "@/types";
 
 interface Props {
   badge: string;
   headline: Headline;
   subheadline: string;
-  trustBadges: TrustBadge[];
 }
 
-const { badge, headline, subheadline, trustBadges } = Astro.props;
+const { badge, headline, subheadline } = Astro.props;
 ---
 
 <section class="relative overflow-hidden py-24 md:py-32">
@@ -62,20 +60,6 @@ const { badge, headline, subheadline, trustBadges } = Astro.props;
       class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
     >
       <AddToChromeButton campaign="hero" />
-    </div>
-
-    <!-- Trust badges -->
-    <div
-      class="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
-    >
-      {
-        trustBadges.map((badge) => (
-          <div class="flex items-center gap-2">
-            <Icon name={badge.icon} class="size-5 text-primary" />
-            {badge.label}
-          </div>
-        ))
-      }
     </div>
   </div>
 

@@ -1,5 +1,0 @@
-[
-  { "id": "free-daily", "icon": "lucide:gift", "label": "{freeDailyLimit} Free Daily" },
-  { "id": "private", "icon": "lucide:shield-check", "label": "100% Private" },
-  { "id": "instant", "icon": "lucide:zap", "label": "Instant Conversion" }
-]
