@@ -1,47 +1,479 @@
 ---
-import { Picture } from "astro:assets";
 import screenshot01 from "@/assets/screenshots/01.png";
 import screenshot02 from "@/assets/screenshots/02.png";
 import screenshot03 from "@/assets/screenshots/03.png";
 import screenshot04 from "@/assets/screenshots/04.png";
+import { Icon } from "astro-icon/components";
+import { Picture } from "astro:assets";
 
 const screenshots = [screenshot01, screenshot02, screenshot03, screenshot04];
 ---
 
-<ul
-  class="w-full px-4 flex gap-4 md:gap-6 lg:gap-8 overflow-x-scroll snap-x snap-mandatory scroll-smooth"
->
-  {
-    screenshots.map((screenshot, index) => (
-      <li class="shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
-        <Picture
-          src={screenshot}
-          formats={["avif", "webp"]}
-          alt={`Screenshot ${index + 1} of ${screenshots.length}`}
-          widths={[480, 768, 1024, 1600]}
-          sizes="(min-width: 768px) 1030px, 92vw"
-          class="w-full pointer-events-none select-none aspect-3/4 sm:aspect-square md:aspect-16/10"
-          priority={index === 0}
-          layout="full-width"
-          fit="cover"
-          position="right"
-        />
-      </li>
-    ))
+<screenshot-carousel class="block w-full">
+  <ul
+    class="carousel-list w-full px-4 flex gap-4 md:gap-6 lg:gap-8 overflow-x-scroll snap-x snap-mandatory scroll-smooth"
+    tabindex="-1"
+  >
+    {
+      screenshots.map((screenshot, index) => (
+        <li class="shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
+          <Picture
+            src={screenshot}
+            formats={["avif", "webp"]}
+            alt={`Screenshot ${index + 1} of ${screenshots.length}`}
+            widths={[480, 768, 1024, 1600]}
+            sizes="(min-width: 768px) 1030px, 92vw"
+            class="w-full pointer-events-none select-none aspect-3/4 sm:aspect-square md:aspect-16/10"
+            priority={index === 0}
+            layout="full-width"
+            fit="cover"
+            position="right"
+          />
+        </li>
+      ))
+    }
+  </ul>
+
+  <div
+    class="carousel-controls sticky bottom-8 pt-8 z-10 flex items-center justify-center gap-4 pointer-events-none"
+  >
+    <ul
+      class="carousel-indicators pointer-events-auto bg-muted/70 backdrop-blur-sm rounded-full px-4 h-14 flex items-center hover:bg-muted transition-colors duration-300"
+      role="tablist"
+      aria-label="Screenshot indicators"
+    >
+      {
+        screenshots.map((_, index) => (
+          <li role="tab">
+            <button
+              type="button"
+              class="carousel-dot group p-2 cursor-pointer rounded-full"
+              aria-label={`Go to screenshot ${index + 1}`}
+              aria-current={index === 0 ? "true" : undefined}
+              tabindex={index === 0 ? 0 : -1}
+              data-index={index}
+            >
+              <span class="relative block rounded-full size-2 transition-all duration-300 bg-foreground/30 group-aria-current:w-12 group-hover:bg-foreground/50 overflow-hidden">
+                <span class="carousel-progress absolute inset-0 origin-left rounded-full bg-foreground" />
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <button
+      class="carousel-play group pointer-events-auto flex items-center justify-center size-14 rounded-full cursor-pointer bg-muted/70 backdrop-blur-sm hover:bg-muted transition-colors duration-300"
+      aria-label="Play carousel"
+      aria-pressed="false"
+    >
+      <Icon
+        name="stash:play-solid"
+        class="size-9 text-foreground group-aria-pressed:hidden"
+        aria-hidden="true"
+      />
+      <Icon
+        name="stash:pause-solid"
+        class="size-9 text-foreground hidden group-aria-pressed:block"
+        aria-hidden="true"
+      />
+    </button>
+  </div>
+</screenshot-carousel>
+
+<script>
+  class ScreenshotCarousel extends HTMLElement {
+    private list!: HTMLUListElement;
+    private indicators!: HTMLElement;
+    private dots: HTMLButtonElement[] = [];
+    private playBtn!: HTMLButtonElement;
+    private slides: HTMLLIElement[] = [];
+    private durationMs = 5000;
+    private remainingMs = 0;
+    private current = 0;
+    private playState: "stopped" | "playing" | "paused" = "stopped";
+    private autoAdvanceTimer: number | undefined;
+    private scrollEndTimer: number | undefined;
+    private programmaticScroll = false;
+    private isTransitioning = false;
+    private slideStartTime = 0;
+    private abortController: AbortController | undefined;
+    private motionQuery: MediaQueryList | undefined;
+    private reducedMotion = false;
+
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      if (!this.cacheElements()) return;
+      this.durationMs = this.readDurationMs();
+      this.remainingMs = this.durationMs;
+      this.setActiveDot(this.current);
+      this.setPlayButtonState(false);
+      this.setupMotionPreferences();
+
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const { signal } = this.abortController;
+
+      this.playBtn.addEventListener("click", this.handlePlayClick, { signal });
+      this.indicators.addEventListener("click", this.handleIndicatorClick, {
+        signal,
+      });
+      this.indicators.addEventListener("keydown", this.handleIndicatorKeydown, {
+        signal,
+      });
+      this.list.addEventListener("scroll", this.handleScroll, {
+        passive: true,
+        signal,
+      });
+
+      if (!this.reducedMotion) this.play();
+    }
+
+    disconnectedCallback() {
+      this.abortController?.abort();
+      this.abortController = undefined;
+      this.teardownMotionPreferences();
+      this.clearTimers();
+    }
+
+    private cacheElements() {
+      const list = this.querySelector<HTMLUListElement>(".carousel-list");
+      const indicators = this.querySelector<HTMLElement>(
+        ".carousel-indicators"
+      );
+      const playBtn = this.querySelector<HTMLButtonElement>(".carousel-play");
+
+      if (!list || !indicators || !playBtn) return false;
+
+      this.list = list;
+      this.indicators = indicators;
+      this.playBtn = playBtn;
+      this.dots = Array.from(
+        this.querySelectorAll<HTMLButtonElement>(".carousel-dot")
+      );
+      this.slides = Array.from(this.list.querySelectorAll("li"));
+
+      return true;
+    }
+
+    private clearTimers() {
+      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
+      if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
+      this.autoAdvanceTimer = undefined;
+      this.scrollEndTimer = undefined;
+    }
+
+    private handlePlayClick = () => {
+      this.playState === "playing" ? this.pause() : this.play();
+    };
+
+    private handleMotionChange = (event: MediaQueryListEvent) => {
+      this.reducedMotion = event.matches;
+      this.applyMotionPreferences();
+    };
+
+    private handleIndicatorClick = (event: Event) => {
+      const target = (
+        event.target as HTMLElement | null
+      )?.closest<HTMLButtonElement>(".carousel-dot");
+      if (!target) return;
+
+      const index = Number(target.dataset.index);
+      if (!Number.isFinite(index) || index === this.current) return;
+
+      this.pauseForManualNavigation();
+      this.goTo(index, { behavior: "smooth" });
+    };
+
+    private handleIndicatorKeydown = (event: KeyboardEvent) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+
+      const target = (
+        event.target as HTMLElement | null
+      )?.closest<HTMLButtonElement>(".carousel-dot");
+      if (!target || this.dots.length === 0 || this.isTransitioning) return;
+
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const nextIndex =
+        (this.current + direction + this.dots.length) % this.dots.length;
+
+      this.pauseForManualNavigation();
+      this.goTo(nextIndex, { behavior: "smooth" });
+      this.focusDot(nextIndex);
+    };
+
+    private handleScroll = () => {
+      if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
+      this.scrollEndTimer = window.setTimeout(this.syncToScroll, 100);
+    };
+
+    private syncToScroll = () => {
+      if (this.slides.length === 0) return;
+
+      if (this.programmaticScroll) {
+        this.programmaticScroll = false;
+        this.isTransitioning = false;
+        return;
+      }
+
+      if (this.playState === "playing") this.pauseForManualNavigation();
+
+      const listRect = this.list.getBoundingClientRect();
+      const center = listRect.left + listRect.width / 2;
+      let closest = this.current;
+      let minDist = Infinity;
+
+      this.slides.forEach((slide, index) => {
+        const slideRect = slide.getBoundingClientRect();
+        const dist = Math.abs(slideRect.left + slideRect.width / 2 - center);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = index;
+        }
+      });
+
+      if (closest !== this.current) {
+        this.current = closest;
+        this.setActiveDot(closest);
+      }
+    };
+
+    private setActiveDot(index: number) {
+      const activeElement = document.activeElement;
+      const focusedDot =
+        activeElement instanceof HTMLButtonElement &&
+        this.dots.includes(activeElement)
+          ? activeElement
+          : null;
+      const focusedWasActive =
+        focusedDot?.getAttribute("aria-current") === "true";
+
+      this.dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.setAttribute("aria-current", "true");
+          dot.setAttribute("tabindex", "0");
+        } else {
+          dot.removeAttribute("aria-current");
+          dot.setAttribute("tabindex", "-1");
+        }
+      });
+
+      if (focusedWasActive) {
+        this.focusDot(index);
+      }
+    }
+
+    private goTo(
+      index: number,
+      options: { behavior?: ScrollBehavior; restartProgress?: boolean } = {}
+    ) {
+      if (this.slides.length === 0) return;
+      const clamped = Math.max(0, Math.min(index, this.slides.length - 1));
+
+      this.current = clamped;
+      this.setActiveDot(clamped);
+
+      const slide = this.slides[clamped];
+      const targetLeft = this.getSlideScrollLeft(slide);
+      const behavior = this.reducedMotion
+        ? "auto"
+        : (options.behavior ?? "smooth");
+      const shouldScroll = Math.abs(this.list.scrollLeft - targetLeft) > 1;
+      this.programmaticScroll = shouldScroll;
+      this.isTransitioning = shouldScroll && behavior === "smooth";
+      this.list.scrollTo({
+        left: targetLeft,
+        behavior,
+      });
+
+      if (options.restartProgress) this.restartProgress();
+    }
+
+    private pauseForManualNavigation() {
+      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = undefined;
+      this.playState = "paused";
+      this.remainingMs = this.durationMs;
+      this.setPlayButtonState(false);
+      this.indicators.dataset.playing = "false";
+      this.indicators.dataset.paused = "true";
+    }
+
+    private focusDot(index: number) {
+      this.dots[index]?.focus({ preventScroll: true });
+    }
+
+    private getSlideScrollLeft(slide: HTMLLIElement) {
+      const listRect = this.list.getBoundingClientRect();
+      const slideRect = slide.getBoundingClientRect();
+      const offsetLeft = slideRect.left - listRect.left + this.list.scrollLeft;
+      const centeredLeft =
+        offsetLeft - (this.list.clientWidth - slideRect.width) / 2;
+      const maxScroll = this.list.scrollWidth - this.list.clientWidth;
+
+      return Math.max(0, Math.min(centeredLeft, maxScroll));
+    }
+
+    private nextSlide = () => {
+      if (this.reducedMotion) return;
+      if (this.slides.length === 0) return;
+      const next = (this.current + 1) % this.slides.length;
+      this.goTo(next, { restartProgress: true });
+      this.startTimer(this.durationMs);
+    };
+
+    private startTimer(duration: number) {
+      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
+      this.remainingMs = duration;
+      this.slideStartTime = performance.now();
+      this.autoAdvanceTimer = window.setTimeout(this.nextSlide, duration);
+    }
+
+    private restartProgress() {
+      if (this.reducedMotion) {
+        this.indicators.dataset.playing = "false";
+        delete this.indicators.dataset.paused;
+        return;
+      }
+      this.indicators.dataset.playing = "false";
+      // Force a reflow so the progress animation restarts.
+      void this.indicators.offsetWidth;
+      this.indicators.dataset.playing = "true";
+      delete this.indicators.dataset.paused;
+    }
+
+    private setPlayButtonState(isPlaying: boolean) {
+      this.playBtn.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+    }
+
+    private play() {
+      if (this.reducedMotion) {
+        this.stop();
+        return;
+      }
+      if (this.playState === "playing" || this.slides.length === 0) return;
+
+      const shouldResume = this.playState === "paused" && this.remainingMs > 0;
+      this.playState = "playing";
+      this.setPlayButtonState(true);
+
+      if (shouldResume) {
+        this.indicators.dataset.playing = "true";
+        delete this.indicators.dataset.paused;
+        this.startTimer(this.remainingMs);
+        return;
+      }
+
+      this.restartProgress();
+      this.startTimer(this.durationMs);
+    }
+
+    private pause() {
+      if (this.playState !== "playing") return;
+
+      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = undefined;
+
+      const elapsed = performance.now() - this.slideStartTime;
+      this.remainingMs = Math.max(this.remainingMs - elapsed, 0);
+
+      this.playState = "paused";
+      this.setPlayButtonState(false);
+      this.indicators.dataset.paused = "true";
+    }
+
+    private stop() {
+      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = undefined;
+      this.playState = "stopped";
+      this.remainingMs = this.durationMs;
+      this.setPlayButtonState(false);
+      this.indicators.dataset.playing = "false";
+      delete this.indicators.dataset.paused;
+    }
+
+    private readDurationMs() {
+      const raw = getComputedStyle(this)
+        .getPropertyValue("--carousel-duration")
+        .trim();
+      const value = parseFloat(raw);
+
+      if (!Number.isFinite(value) || value <= 0) return 5000;
+      if (raw.endsWith("ms")) return value;
+
+      return value * 1000;
+    }
+
+    private setupMotionPreferences() {
+      this.motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      this.reducedMotion = this.motionQuery.matches;
+      this.motionQuery.addEventListener("change", this.handleMotionChange);
+      this.applyMotionPreferences();
+    }
+
+    private teardownMotionPreferences() {
+      if (!this.motionQuery) return;
+      this.motionQuery.removeEventListener("change", this.handleMotionChange);
+      this.motionQuery = undefined;
+    }
+
+    private applyMotionPreferences() {
+      this.playBtn.disabled = this.reducedMotion;
+      this.playBtn.setAttribute(
+        "aria-disabled",
+        this.reducedMotion ? "true" : "false"
+      );
+      this.list.style.scrollBehavior = this.reducedMotion ? "auto" : "";
+
+      if (this.reducedMotion && this.playState === "playing") this.stop();
+    }
   }
-</ul>
+
+  customElements.define("screenshot-carousel", ScreenshotCarousel);
+</script>
 
 <style>
-  ul {
+  screenshot-carousel {
+    --carousel-duration: 5s;
+  }
+
+  .carousel-list {
     scrollbar-width: none;
   }
 
-  ul::-webkit-scrollbar {
+  .carousel-list::-webkit-scrollbar {
     display: none;
   }
 
-  img {
-    object-fit: var(--fit);
-    object-position: var(--pos);
+  .carousel-progress {
+    transform: scaleX(0);
+  }
+
+  .carousel-indicators[data-playing="true"]
+    button[aria-current="true"]
+    .carousel-progress {
+    animation: progress-fill var(--carousel-duration) linear forwards;
+  }
+
+  .carousel-indicators[data-paused="true"]
+    button[aria-current="true"]
+    .carousel-progress {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-indicators button[aria-current="true"] .carousel-progress {
+      animation: none;
+    }
+  }
+
+  @keyframes progress-fill {
+    to {
+      transform: scaleX(1);
+    }
   }
 </style>
