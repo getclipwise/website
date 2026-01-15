@@ -55,13 +55,13 @@ const screenshots = [
           <li role="tab">
             <button
               type="button"
-              class="carousel-dot group cursor-pointer rounded-full p-2"
+              class="carousel-dot group cursor-pointer rounded-full p-2 focus-visible:outline-transparent"
               aria-label={`Go to screenshot ${index + 1}`}
               aria-current={index === 0 ? "true" : undefined}
               tabindex={index === 0 ? 0 : -1}
               data-index={index}
             >
-              <span class="relative block rounded-full size-2 transition-all duration-300 bg-foreground/30 group-aria-current:w-12 group-hover:bg-foreground/50 overflow-hidden">
+              <span class="relative block rounded-full size-2 [transition:width_300ms,background-color_300ms,outline-color_150ms] bg-foreground/30 group-aria-current:w-12 group-hover:bg-foreground/50 overflow-hidden outline-2 outline-offset-2 outline-transparent group-focus-visible:outline-ring">
                 <span class="carousel-progress absolute inset-0 origin-left rounded-full bg-foreground" />
               </span>
             </button>
