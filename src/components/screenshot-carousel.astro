@@ -96,18 +96,15 @@ const screenshots = [
     private dots: HTMLButtonElement[] = [];
     private playBtn!: HTMLButtonElement;
     private slides: HTMLLIElement[] = [];
-    private durationMs = 5000;
-    private remainingMs = 0;
     private current = 0;
     private playState: "stopped" | "playing" | "paused" = "stopped";
-    private autoAdvanceTimer: number | undefined;
     private scrollEndTimer: number | undefined;
     private programmaticScroll = false;
     private isTransitioning = false;
-    private slideStartTime = 0;
     private abortController: AbortController | undefined;
     private motionQuery: MediaQueryList | undefined;
     private reducedMotion = false;
+    private supportsScrollEnd = "onscrollend" in window;
 
     constructor() {
       super();
@@ -115,8 +112,6 @@ const screenshots = [
 
     connectedCallback() {
       if (!this.cacheElements()) return;
-      this.durationMs = this.readDurationMs();
-      this.remainingMs = this.durationMs;
       this.setActiveDot(this.current);
       this.setPlayButtonState(false);
       this.setupMotionPreferences();
@@ -132,10 +127,18 @@ const screenshots = [
       this.indicators.addEventListener("keydown", this.handleIndicatorKeydown, {
         signal,
       });
-      this.list.addEventListener("scroll", this.handleScroll, {
-        passive: true,
+      this.indicators.addEventListener("animationend", this.handleProgressEnd, {
         signal,
       });
+
+      if (this.supportsScrollEnd) {
+        this.list.addEventListener("scrollend", this.syncToScroll, { signal });
+      } else {
+        this.list.addEventListener("scroll", this.handleScrollFallback, {
+          passive: true,
+          signal,
+        });
+      }
 
       if (!this.reducedMotion) this.play();
     }
@@ -144,7 +147,7 @@ const screenshots = [
       this.abortController?.abort();
       this.abortController = undefined;
       this.teardownMotionPreferences();
-      this.clearTimers();
+      if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
     }
 
     private cacheElements() {
@@ -167,13 +170,6 @@ const screenshots = [
       return true;
     }
 
-    private clearTimers() {
-      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
-      if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
-      this.autoAdvanceTimer = undefined;
-      this.scrollEndTimer = undefined;
-    }
-
     private handlePlayClick = () => {
       this.playState === "playing" ? this.pause() : this.play();
     };
@@ -181,6 +177,12 @@ const screenshots = [
     private handleMotionChange = (event: MediaQueryListEvent) => {
       this.reducedMotion = event.matches;
       this.applyMotionPreferences();
+    };
+
+    private handleProgressEnd = (event: AnimationEvent) => {
+      if (event.animationName !== "progress-fill") return;
+      if (this.playState !== "playing" || this.reducedMotion) return;
+      this.nextSlide();
     };
 
     private handleIndicatorClick = (event: Event) => {
@@ -214,7 +216,7 @@ const screenshots = [
       this.focusDot(nextIndex);
     };
 
-    private handleScroll = () => {
+    private handleScrollFallback = () => {
       if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
       this.scrollEndTimer = window.setTimeout(this.syncToScroll, 100);
     };
@@ -302,10 +304,7 @@ const screenshots = [
     }
 
     private pauseForManualNavigation() {
-      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
-      this.autoAdvanceTimer = undefined;
       this.playState = "paused";
-      this.remainingMs = this.durationMs;
       this.setPlayButtonState(false);
       this.indicators.dataset.playing = "false";
       this.indicators.dataset.paused = "true";
@@ -327,19 +326,10 @@ const screenshots = [
     }
 
     private nextSlide = () => {
-      if (this.reducedMotion) return;
-      if (this.slides.length === 0) return;
+      if (this.reducedMotion || this.slides.length === 0) return;
       const next = (this.current + 1) % this.slides.length;
       this.goTo(next, { restartProgress: true });
-      this.startTimer(this.durationMs);
     };
-
-    private startTimer(duration: number) {
-      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
-      this.remainingMs = duration;
-      this.slideStartTime = performance.now();
-      this.autoAdvanceTimer = window.setTimeout(this.nextSlide, duration);
-    }
 
     private restartProgress() {
       if (this.reducedMotion) {
@@ -348,7 +338,7 @@ const screenshots = [
         return;
       }
       this.indicators.dataset.playing = "false";
-      // Force a reflow so the progress animation restarts.
+      // Force a reflow so the progress animation restarts
       void this.indicators.offsetWidth;
       this.indicators.dataset.playing = "true";
       delete this.indicators.dataset.paused;
@@ -365,29 +355,14 @@ const screenshots = [
       }
       if (this.playState === "playing" || this.slides.length === 0) return;
 
-      const shouldResume = this.playState === "paused" && this.remainingMs > 0;
       this.playState = "playing";
       this.setPlayButtonState(true);
-
-      if (shouldResume) {
-        this.indicators.dataset.playing = "true";
-        delete this.indicators.dataset.paused;
-        this.startTimer(this.remainingMs);
-        return;
-      }
-
-      this.restartProgress();
-      this.startTimer(this.durationMs);
+      this.indicators.dataset.playing = "true";
+      delete this.indicators.dataset.paused;
     }
 
     private pause() {
       if (this.playState !== "playing") return;
-
-      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
-      this.autoAdvanceTimer = undefined;
-
-      const elapsed = performance.now() - this.slideStartTime;
-      this.remainingMs = Math.max(this.remainingMs - elapsed, 0);
 
       this.playState = "paused";
       this.setPlayButtonState(false);
@@ -395,25 +370,10 @@ const screenshots = [
     }
 
     private stop() {
-      if (this.autoAdvanceTimer) clearTimeout(this.autoAdvanceTimer);
-      this.autoAdvanceTimer = undefined;
       this.playState = "stopped";
-      this.remainingMs = this.durationMs;
       this.setPlayButtonState(false);
       this.indicators.dataset.playing = "false";
       delete this.indicators.dataset.paused;
-    }
-
-    private readDurationMs() {
-      const raw = getComputedStyle(this)
-        .getPropertyValue("--carousel-duration")
-        .trim();
-      const value = parseFloat(raw);
-
-      if (!Number.isFinite(value) || value <= 0) return 5000;
-      if (raw.endsWith("ms")) return value;
-
-      return value * 1000;
     }
 
     private setupMotionPreferences() {
@@ -458,6 +418,7 @@ const screenshots = [
   }
 
   .carousel-list img {
+    /* --fit and --pos are set by Picture component */
     object-fit: var(--fit);
     object-position: var(--pos);
   }
