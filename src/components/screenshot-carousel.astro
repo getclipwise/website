@@ -55,7 +55,7 @@ const screenshots = [
           <li role="tab">
             <button
               type="button"
-              class="carousel-dot group p-2 cursor-pointer rounded-full"
+              class="carousel-dot group cursor-pointer rounded-full p-2"
               aria-label={`Go to screenshot ${index + 1}`}
               aria-current={index === 0 ? "true" : undefined}
               tabindex={index === 0 ? 0 : -1}
@@ -71,7 +71,7 @@ const screenshots = [
     </ul>
 
     <button
-      class="carousel-play group pointer-events-auto flex items-center justify-center size-14 rounded-full cursor-pointer bg-muted/70 backdrop-blur-sm hover:bg-muted transition-colors duration-300"
+      class="carousel-play group pointer-events-auto flex size-14 cursor-pointer items-center justify-center rounded-full bg-muted/70 backdrop-blur-sm transition-colors duration-300 hover:bg-muted"
       aria-label="Play carousel"
       aria-pressed="false"
     >

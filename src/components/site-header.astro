@@ -18,7 +18,7 @@ const navLinks = [
 
 <a
   href="#main-content"
-  class="absolute -top-10 left-0 z-50 bg-white px-4 py-2 text-emerald-950 no-underline focus:top-0 dark:bg-emerald-400 dark:text-emerald-950"
+  class="absolute -top-10 left-0 z-50 rounded-br-lg bg-white px-4 py-2 font-medium text-emerald-950 no-underline focus:top-0 dark:bg-emerald-400 dark:text-emerald-950"
 >
   Skip to main content
 </a>
@@ -40,7 +40,7 @@ const navLinks = [
     >
       <a
         href="/"
-        class="flex items-center gap-2.5 font-semibold text-white no-underline transition-opacity hover:opacity-90"
+        class="flex items-center gap-2.5 rounded-lg font-semibold text-white no-underline transition-opacity hover:opacity-90"
       >
         <Logo width={36} height={36} class="size-9 drop-shadow-md" />
         <span class="text-lg tracking-tight">{siteConfig.name}</span>
@@ -55,7 +55,7 @@ const navLinks = [
                 <a
                   href={link.href}
                   aria-current={currentPath === link.href ? "page" : undefined}
-                  class="whitespace-nowrap text-sm font-medium text-emerald-100/90 transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
+                  class="whitespace-nowrap rounded-md px-2 py-1 text-sm font-medium text-emerald-100/90 transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
                 >
                   {link.label}
                 </a>
@@ -84,7 +84,7 @@ const navLinks = [
         aria-label="Toggle menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        class="group flex size-10 items-center justify-center rounded-lg text-emerald-100/90 transition-colors hover:bg-white/10 hover:text-white md:hidden"
+        class="group flex size-10 cursor-pointer items-center justify-center rounded-lg text-emerald-100/90 transition-colors hover:bg-white/10 hover:text-white md:hidden"
         id="menu-button"
       >
         <Icon

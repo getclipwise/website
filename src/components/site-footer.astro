@@ -42,7 +42,7 @@ const socialLinks = [
       <div class="flex flex-col items-center gap-3 md:items-start">
         <a
           href="/"
-          class="flex items-center gap-2.5 font-semibold text-white no-underline transition-opacity hover:opacity-90"
+          class="flex items-center gap-2.5 rounded-lg font-semibold text-white no-underline transition-opacity hover:opacity-90"
         >
           <Logo width={32} height={32} class="size-8 drop-shadow-md" />
           <span class="text-lg tracking-tight">{siteConfig.name}</span>
@@ -74,7 +74,7 @@ const socialLinks = [
                     aria-current={
                       currentPath === link.href ? "page" : undefined
                     }
-                    class="text-sm text-emerald-100/80 no-underline transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
+                    class="rounded-md text-sm text-emerald-100/80 no-underline transition-colors hover:text-white aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:underline-offset-4"
                   >
                     {link.label}
                   </a>
@@ -98,7 +98,7 @@ const socialLinks = [
                     aria-current={
                       currentPath === link.href ? "page" : undefined
                     }
-                    class="text-sm text-emerald-100/80 no-underline transition-colors hover:text-white"
+                    class="rounded-md text-sm text-emerald-100/80 no-underline transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -144,7 +144,7 @@ const socialLinks = [
           href={siteConfig.author.website}
           target="_blank"
           rel="noopener noreferrer"
-          class="font-medium text-emerald-100/80 no-underline transition-colors hover:text-white"
+          class="rounded-md font-medium text-emerald-100/80 no-underline transition-colors hover:text-white"
         >
           {siteConfig.author.name}
         </a>
