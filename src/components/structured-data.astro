@@ -1,8 +1,13 @@
 ---
 import iconUrl from "@/assets/icon.svg?no-inline";
 import ogImageUrl from "@/assets/og-image.png?url";
+import screenshot01 from "@/assets/screenshots/01.png";
+import screenshot02 from "@/assets/screenshots/02.png";
+import screenshot03 from "@/assets/screenshots/03.png";
+import screenshot04 from "@/assets/screenshots/04.png";
 import { siteConfig } from "@/lib/site-config";
 import type { Feature, PricingTier, Step } from "@/types";
+import { getImage } from "astro:assets";
 
 interface Breadcrumb {
   name: string;
@@ -30,12 +35,21 @@ const siteUrl = Astro.site!.href;
 const ogImageURL = new URL(ogImageUrl, Astro.site!).href;
 const logoURL = new URL(iconUrl, Astro.site!).href;
 
+const screenshotWidth = 1440;
+const screenshotHeight = 900;
+
+const screenshots = await Promise.all(
+  [screenshot01, screenshot02, screenshot03, screenshot04].map((src) =>
+    getImage({ src, width: screenshotWidth, height: screenshotHeight })
+  )
+);
+
 // Entity ID generators
 const authorId = () => `${siteConfig.author.website}#me`;
 const logoId = () => `${siteUrl}#logo`;
 const organizationId = () => `${siteUrl}#organization`;
 const softwareId = () => `${siteUrl}#software`;
-const screenshotId = () => `${siteUrl}#screenshot`;
+const screenshotId = (index: number) => `${siteUrl}#screenshot-${index + 1}`;
 const websiteId = () => `${siteUrl}#website`;
 
 // Entity reference generators
@@ -106,13 +120,17 @@ const webApplicationSchema = {
   featureList,
   downloadUrl: siteConfig.links.chromeWebStore,
   installUrl: siteConfig.links.chromeWebStore,
-  screenshot: {
-    "@type": "ImageObject",
-    "@id": screenshotId(),
-    url: ogImageURL,
-    width: "1200",
-    height: "630",
-  },
+  screenshot: screenshots.map((img, index) => {
+    const screenshotUrl = new URL(img.src, siteUrl).href;
+    return {
+      "@type": "ImageObject",
+      "@id": screenshotId(index),
+      url: screenshotUrl,
+      contentUrl: screenshotUrl,
+      width: String(screenshotWidth),
+      height: String(screenshotHeight),
+    };
+  }),
   image: logoRef(),
   author: authorRef(),
   publisher: organizationRef(),
