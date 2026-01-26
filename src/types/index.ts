@@ -5,6 +5,7 @@ export type Step = CollectionEntry<"steps">["data"];
 export type UseCase = CollectionEntry<"useCases">["data"];
 export type PrivacyHighlight = CollectionEntry<"privacyHighlights">["data"];
 export type PricingTier = CollectionEntry<"pricingTiers">["data"];
+export type FAQ = CollectionEntry<"faqs">["data"];
 
 export interface Headline {
   prefix: string;

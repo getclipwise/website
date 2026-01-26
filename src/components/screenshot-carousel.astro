@@ -7,10 +7,26 @@ import { Icon } from "astro-icon/components";
 import { Picture } from "astro:assets";
 
 const screenshots = [
-  { src: screenshot01, title: "One Click. Clean Markdown." },
-  { src: screenshot02, title: "Send to AI. Ready to use." },
-  { src: screenshot03, title: "Code Blocks. Perfectly Preserved." },
-  { src: screenshot04, title: "Light or Dark. Your Choice." },
+  {
+    src: screenshot01,
+    title: "One Click. Clean Markdown.",
+    alt: "Clipwise AI Chrome extension sidebar showing a webpage converted to clean Markdown format",
+  },
+  {
+    src: screenshot02,
+    title: "Send to AI. Ready to use.",
+    alt: "Clipwise AI integration buttons for ChatGPT and Claude with one-click paste functionality",
+  },
+  {
+    src: screenshot03,
+    title: "Code Blocks. Perfectly Preserved.",
+    alt: "Markdown output showing perfectly preserved code blocks with syntax highlighting",
+  },
+  {
+    src: screenshot04,
+    title: "Light or Dark. Your Choice.",
+    alt: "Clipwise AI extension in dark mode theme matching system preferences",
+  },
 ];
 ---
 
@@ -20,7 +36,7 @@ const screenshots = [
     tabindex="-1"
   >
     {
-      screenshots.map(({ title, src }, index) => (
+      screenshots.map(({ title, src, alt }, index) => (
         <li class="relative shrink-0 w-11/12 rounded-3xl snap-center bg-linear-to-b from-emerald-200 to-emerald-300 dark:from-emerald-900 dark:to-emerald-950">
           <p class="absolute inset-x-0 inset-y-1/16 text-center text-lg md:text-xl lg:text-2xl font-medium">
             {title}
@@ -28,7 +44,7 @@ const screenshots = [
           <Picture
             src={src}
             formats={["avif", "webp"]}
-            alt={`Screenshot ${index + 1} of ${screenshots.length}`}
+            alt={alt}
             widths={[480, 768, 1024, 1600]}
             sizes="(min-width: 768px) 1030px, 92vw"
             class="w-full pointer-events-none select-none aspect-3/4 sm:aspect-square md:aspect-16/10"

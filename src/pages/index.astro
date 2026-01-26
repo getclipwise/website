@@ -1,4 +1,5 @@
 ---
+import FaqSection from "@/components/home/faq-section.astro";
 import FeaturesSection from "@/components/home/features-section.astro";
 import FinalCtaSection from "@/components/home/final-cta-section.astro";
 import HeroSection from "@/components/home/hero-section.astro";
@@ -32,6 +33,10 @@ const pricingTiers = pricingTiersRaw.map((entry) => ({
   ...entry.data,
   features: entry.data.features.map((f) => interpolate(f, placeholders)),
 }));
+const faqs = (await getCollection("faqs")).map((entry) => ({
+  ...entry.data,
+  answer: interpolate(entry.data.answer, placeholders),
+}));
 ---
 
 <RootLayout
@@ -46,6 +51,7 @@ const pricingTiers = pricingTiersRaw.map((entry) => ({
     pricingTiers,
     features,
     steps,
+    faqs,
   }}
 >
   <main id="main-content">
@@ -94,6 +100,13 @@ const pricingTiers = pricingTiersRaw.map((entry) => ({
       subtitle="Free forever. Upgrade when you need more."
       tiers={pricingTiers}
       disclaimer="Free daily conversions reset automatically every day."
+    />
+
+    <FaqSection
+      id="faq"
+      title="Frequently asked questions"
+      subtitle="Got questions? We've got answers."
+      faqs={faqs}
     />
 
     <FinalCtaSection

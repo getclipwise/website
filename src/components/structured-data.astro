@@ -6,7 +6,7 @@ import screenshot02 from "@/assets/screenshots/02.png";
 import screenshot03 from "@/assets/screenshots/03.png";
 import screenshot04 from "@/assets/screenshots/04.png";
 import { siteConfig } from "@/lib/site-config";
-import type { Feature, PricingTier, Step } from "@/types";
+import type { FAQ, Feature, PricingTier, Step } from "@/types";
 import { getImage } from "astro:assets";
 
 interface Breadcrumb {
@@ -24,6 +24,7 @@ type WebAppProps = BaseProps & {
   pricingTiers: PricingTier[];
   features: Feature[];
   steps: Step[];
+  faqs: FAQ[];
 };
 type Props = WebsiteProps | WebAppProps;
 
@@ -40,8 +41,8 @@ const screenshotHeight = 900;
 
 const screenshots = await Promise.all(
   [screenshot01, screenshot02, screenshot03, screenshot04].map((src) =>
-    getImage({ src, width: screenshotWidth, height: screenshotHeight })
-  )
+    getImage({ src, width: screenshotWidth, height: screenshotHeight }),
+  ),
 );
 
 // Entity ID generators
@@ -140,6 +141,13 @@ const webApplicationSchema = {
     url: siteUrl,
     name: `${siteConfig.name} Help`,
   },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5",
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: "4",
+  },
 };
 
 // BreadcrumbList schema per https://schema.org/BreadcrumbList
@@ -203,11 +211,29 @@ const howToSchema = isWebApp
     }
   : null;
 
+// FAQPage schema per https://schema.org/FAQPage
+const faqPageSchema = isWebApp
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: props.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }
+  : null;
+
 const schemas = [
   organizationSchema,
   breadcrumbSchema,
   ...(isWebApp
-    ? [webApplicationSchema, webSiteSchema, howToSchema].filter(Boolean)
+    ? [webApplicationSchema, webSiteSchema, howToSchema, faqPageSchema].filter(
+        Boolean,
+      )
     : []),
 ];
 ---

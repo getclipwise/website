@@ -52,10 +52,20 @@ const pricingTiers = defineCollection({
   }),
 });
 
+const faqs = defineCollection({
+  loader: file("src/content/faqs.json"),
+  schema: z.object({
+    id: z.string(),
+    question: z.string(),
+    answer: z.string(),
+  }),
+});
+
 export const collections = {
   features,
   steps,
   useCases,
   privacyHighlights,
   pricingTiers,
+  faqs,
 };

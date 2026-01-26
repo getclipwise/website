@@ -93,18 +93,22 @@
   }
 
   :where(
-      a,
-      button,
-      [role="button"],
-      input,
-      select,
-      textarea,
-      [tabindex]:not([tabindex="-1"])
-    ) {
-    @apply outline-2 outline-transparent outline-offset-2 transition-[outline-color] duration-150;
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea,
+    [tabindex]:not([tabindex="-1"])
+  ) {
+    @apply outline-2 outline-transparent outline-offset-2 transition-[outline-color] duration-150 focus-visible:outline-ring;
+  }
 
-    &:focus-visible {
-      @apply outline-ring;
+  :where(details) {
+    @apply outline-2 outline-transparent outline-offset-2 transition-[outline-color] duration-150 has-focus-visible:outline-ring;
+
+    & > summary {
+      @apply outline-none;
     }
   }
 }

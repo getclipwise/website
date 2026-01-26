@@ -24,6 +24,7 @@ Clipwise AI follows Google/Bing structured data and on-page SEO best practices.
   | `WebApplication` | Chrome extension details & pricing | Home      |
   | `WebSite`        | Site info with publisher           | Home      |
   | `HowTo`          | Usage steps                        | Home      |
+  | `FAQPage`        | FAQ rich results                   | Home      |
 
   Entity `@id` map (reuse before adding new):
 
@@ -39,7 +40,7 @@ Clipwise AI follows Google/Bing structured data and on-page SEO best practices.
   **Cross-site entity linking:** The Person entity uses a canonical `@id` (`https://morello.dev/#me`) hosted on the author's personal website. This site only references it — the full Person schema with `sameAs` links is defined on morello.dev. Search engines resolve the `@id` across crawls to connect the entities in their Knowledge Graph.
 
 - Sitemap & robots: `@astrojs/sitemap` generates `/sitemap-index.xml`; `/robots.txt` links to it.
-- Section anchors: Home uses `#how-it-works`, `#features`, `#use-cases`, `#privacy`, `#pricing`, `#get-started`.
+- Section anchors: Home uses `#how-it-works`, `#features`, `#use-cases`, `#privacy`, `#pricing`, `#faq`, `#get-started`.
 
 ## Link attributes
 

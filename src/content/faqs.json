@@ -1,0 +1,27 @@
+[
+  {
+    "id": "what-is-clipwise",
+    "question": "What is Clipwise AI?",
+    "answer": "Clipwise AI is a Chrome extension that converts any webpage into clean, AI-ready Markdown with one click. It removes ads, navigation, and clutter so you can paste webpage content directly into ChatGPT, Claude, or any AI assistant."
+  },
+  {
+    "id": "is-it-free",
+    "question": "Is Clipwise AI free to use?",
+    "answer": "Yes! Clipwise AI offers a free tier with {freeDailyLimit} conversions per day. For unlimited conversions, you can upgrade to Premium for a one-time payment of {premiumPrice}. No subscription required."
+  },
+  {
+    "id": "is-my-data-private",
+    "question": "Is my data private? Does Clipwise AI send my data to servers?",
+    "answer": "Your privacy is protected. All webpage processing happens locally in your browser. We cannot see, access, or store any content you convert. The extension works completely offline."
+  },
+  {
+    "id": "which-browsers-supported",
+    "question": "Which browsers are supported?",
+    "answer": "Clipwise AI works on any Chromium-based browser including Google Chrome, Microsoft Edge, Brave, and Opera."
+  },
+  {
+    "id": "which-ai-tools-work",
+    "question": "Which AI tools does Clipwise AI work with?",
+    "answer": "Clipwise AI works with any AI tool that accepts text input, including ChatGPT, Claude, Gemini, Perplexity, and AI coding assistants like Cursor and GitHub Copilot."
+  }
+]

@@ -49,11 +49,11 @@ src/
 │   ├── structured-data.astro  # JSON-LD structured data schemas
 │   └── *.astro          # Reusable components (header, footer, cards)
 ├── content/             # Content collections (JSON data files)
+│   ├── faqs.json
 │   ├── features.json
 │   ├── steps.json
 │   ├── use-cases.json
 │   ├── pricing-tiers.json
-│   ├── trust-badges.json
 │   └── privacy-highlights.json
 ├── content.config.ts    # Content collection schemas (Zod)
 ├── layouts/
