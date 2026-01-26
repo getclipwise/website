@@ -141,28 +141,24 @@ const webApplicationSchema = {
     url: siteUrl,
     name: `${siteConfig.name} Help`,
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "4",
-  },
 };
 
 // BreadcrumbList schema per https://schema.org/BreadcrumbList
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: breadcrumbs.map((breadcrumb, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@id": new URL(breadcrumb.path, Astro.site!).href,
-      name: breadcrumb.name,
-    },
-  })),
-};
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbs.map((breadcrumb, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@id": new URL(breadcrumb.path, Astro.site!).href,
+            name: breadcrumb.name,
+          },
+        })),
+      }
+    : null;
 
 // WebSite schema per https://schema.org/WebSite
 const webSiteSchema = {
@@ -231,11 +227,9 @@ const schemas = [
   organizationSchema,
   breadcrumbSchema,
   ...(isWebApp
-    ? [webApplicationSchema, webSiteSchema, howToSchema, faqPageSchema].filter(
-        Boolean,
-      )
+    ? [webApplicationSchema, webSiteSchema, howToSchema, faqPageSchema]
     : []),
-];
+].filter(Boolean);
 ---
 
 {
