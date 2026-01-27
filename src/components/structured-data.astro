@@ -69,7 +69,6 @@ const logoImageSchema = {
 
 // Organization schema per https://schema.org/Organization
 const organizationSchema = {
-  "@context": "https://schema.org",
   "@type": "Organization",
   "@id": organizationId(),
   name: siteConfig.name,
@@ -106,7 +105,6 @@ const featureList = isWebApp
 
 // WebApplication schema per https://schema.org/WebApplication
 const webApplicationSchema = {
-  "@context": "https://schema.org",
   "@type": "WebApplication",
   "@id": softwareId(),
   name: siteConfig.name,
@@ -147,7 +145,6 @@ const webApplicationSchema = {
 const breadcrumbSchema =
   breadcrumbs.length > 0
     ? {
-        "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: breadcrumbs.map((breadcrumb, index) => ({
           "@type": "ListItem",
@@ -162,7 +159,6 @@ const breadcrumbSchema =
 
 // WebSite schema per https://schema.org/WebSite
 const webSiteSchema = {
-  "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": websiteId(),
   name: siteConfig.name,
@@ -175,7 +171,6 @@ const webSiteSchema = {
 // HowTo schema per https://schema.org/HowTo
 const howToSchema = isWebApp
   ? {
-      "@context": "https://schema.org",
       "@type": "HowTo",
       name: "How to turn a webpage into AI-ready Markdown",
       description:
@@ -210,7 +205,6 @@ const howToSchema = isWebApp
 // FAQPage schema per https://schema.org/FAQPage
 const faqPageSchema = isWebApp
   ? {
-      "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: props.faqs.map((faq) => ({
         "@type": "Question",
@@ -223,21 +217,20 @@ const faqPageSchema = isWebApp
     }
   : null;
 
-const schemas = [
-  organizationSchema,
-  breadcrumbSchema,
-  ...(isWebApp
-    ? [webApplicationSchema, webSiteSchema, howToSchema, faqPageSchema]
-    : []),
-].filter(Boolean);
+const openGraphSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    organizationSchema,
+    breadcrumbSchema,
+    ...(isWebApp
+      ? [webApplicationSchema, webSiteSchema, howToSchema, faqPageSchema]
+      : []),
+  ].filter(Boolean),
+};
 ---
 
-{
-  schemas.map((schema) => (
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(schema, null, 0)}
-    />
-  ))
-}
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(openGraphSchema, null, 0)}
+/>
